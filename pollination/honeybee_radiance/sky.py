@@ -89,6 +89,29 @@ class AddSkyMatrix(Function):
 
 
 @dataclass
+class GenSky(Function):
+    """Generates a sky from a honeybee-radiance sky string."""
+
+    sky_string = Inputs.str(
+        default='cie 21 Jun 12:00 -lat 0 -lon 0 -tz 0 -type 0',
+        description='Sky string for any type of sky (cie, climate-based, irradiance, '
+        'illuminance). This can be a minimal representation of the sky through '
+        'altitude and azimuth (eg. "cie -alt 71.6 -az 185.2 -type 0"). Or it can be '
+        'a detailed specification of time and location (eg. "climate-based 21 Jun 12:00 '
+        '-lat 41.78 -lon -87.75 -dni 800 -dhi 120"). Both the altitude and azimuth '
+        'must be specified for the minimal representation to be used. See the '
+        'honeybee-radiance sky CLI group for a full list of options '
+        '(https://www.ladybug.tools/honeybee-radiance/docs/cli/sky.html).'
+    )
+
+    @command
+    def gen_sky(self):
+        return 'honeybee-radiance sky {{self.sky_string}} --name output.sky'
+
+    sky = Outputs.file(description='Generated sky file.', path='output.sky')
+
+
+@dataclass
 class GenSkyWithCertainIllum(Function):
     """Generates a sky with certain illuminance level."""
 
@@ -99,7 +122,8 @@ class GenSkyWithCertainIllum(Function):
 
     @command
     def gen_overcast_sky(self):
-        return 'honeybee-radiance sky illuminance {{self.illuminance}} --name overcast.sky'
+        return 'honeybee-radiance sky illuminance {{self.illuminance}} ' \
+            '--name overcast.sky'
 
     sky = Outputs.file(description='Generated sky file.', path='overcast.sky')
 
