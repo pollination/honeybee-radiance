@@ -1,5 +1,5 @@
 from pollination.honeybee_radiance.sky import AddRemoveSkyMatrix, \
-    GenSkyWithCertainIllum, CreateSkyDome, CreateSkyMatrix
+    GenSky, GenSkyWithCertainIllum, CreateSkyDome, CreateSkyMatrix
 
 from queenbee.plugin.function import Function
 
@@ -7,6 +7,12 @@ from queenbee.plugin.function import Function
 def test_add_remove_sky_matrix():
     function = AddRemoveSkyMatrix().queenbee
     assert function.name == 'add-remove-sky-matrix'
+    assert isinstance(function, Function)
+
+
+def test_gen_sky():
+    function = GenSky().queenbee
+    assert function.name == 'gen-sky'
     assert isinstance(function, Function)
 
 
