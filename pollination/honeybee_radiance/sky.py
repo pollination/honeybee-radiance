@@ -209,3 +209,32 @@ class CreateSkyMatrix(Function):
             '--output-format {{self.output_format}} --sky-density {{self.sky_density}}'
 
     sky_matrix = Outputs.file(description='Output Sky matrix', path='sky.mtx')
+
+
+@dataclass
+class AdjustSkyForMetric(Function):
+    """Adjust a sky file to ensure it is suitable for a given metric.
+
+    Specifcally, this ensures that skies being created with gendaylit have a -O
+    option that aligns with visible vs. solar energy.
+    """
+
+    sky = Inputs.file(
+        description='Path to a .sky file to be adjusted based on the metric.',
+        path='input.sky'
+    )
+
+    metric = Inputs.str(
+        description='Text for the type of metric to be output from the calculation. '
+        'Choose from: illuminance, irradiance, luminance, radiance.',
+        default='illuminance',
+        spec={'type': 'string',
+              'enum': ['illuminance', 'irradiance', 'luminance', 'radiance']}
+    )
+
+    @command
+    def adjust_sky_for_metric(self):
+        return 'honeybee-radiance sky adjust-for-metric {{self.sky}} ' \
+            '--metric {{self.metric}} --name output.sky'
+
+    adjusted_sky = Outputs.file(description='Adjusted sky file.', path='output.sky')

@@ -54,8 +54,9 @@ class RayTracingPointInTime(Function):
     metric = Inputs.str(
         description='Text for the type of metric to be output from the calculation. '
         'Choose from: illuminance, irradiance, luminance, radiance.',
-        default='illuminance', spec={'type': 'string',
-        'enum': ['illuminance', 'irradiance', 'luminance', 'radiance']}
+        default='illuminance',
+        spec={'type': 'string',
+              'enum': ['illuminance', 'irradiance', 'luminance', 'radiance']}
     )
 
     fixed_radiance_parameters = Inputs.str(
