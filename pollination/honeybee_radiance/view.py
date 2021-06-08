@@ -16,14 +16,13 @@ class SplitView(Function):
     overture = Inputs.str(
         description='A switch to note whether an ambient file (.amb) should be '
         'generated for an overture calculation before the view is split into smaller '
-        'views. The .amb file will have the same name as the view-file. With an '
-        'overture calculation, the ambient file (aka ambient cache) is first populated '
-        'with values. Thereby ensuring that - when reused to create an image - '
-        'Radiance uses interpolation between already calculated values rather than less '
-        'reliable extrapolation. The overture calculation has comparatively small '
-        'computation time to full rendering but is single-core can become time '
-        'consuming in situations with very high numbers of rendering multiprocessors.',
-        default='overture',
+        'views. With an overture calculation, the ambient file (aka ambient cache) is '
+        'first populated with values. Thereby ensuring that - when reused to create '
+        'an image - Radiance uses interpolation between already calculated values '
+        'rather than less reliable extrapolation. The overture calculation has '
+        'comparatively small computation time to full rendering but is single-core '
+        'can become time consuming in situations with very high numbers of '
+        'rendering multiprocessors.', default='overture',
         spec={'type': 'string', 'enum': ['overture', 'skip-overture']}
     )
 
