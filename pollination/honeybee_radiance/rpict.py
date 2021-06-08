@@ -28,8 +28,7 @@ class RayTracingPicture(Function):
 
     resolution = Inputs.int(
         description='An integer for the maximum dimension of the image in pixels '
-        '(either width or height depending on the input view angle and type). This will '
-        'overwrite the -x and -y option in any input radiance parameters if specified. ',
+        '(either width or height depending on the input view angle and type).',
         spec={'type': 'integer', 'minimum': 1}, default=512
     )
 
@@ -40,7 +39,7 @@ class RayTracingPicture(Function):
         'improve anti-aliasing.', default=1
     )
 
-    ambient_cache = Outputs.file(
+    ambient_cache = Inputs.file(
         description='Path to the ambient cache if an overture calculation was '
         'specified. If unspecified, no ambient cache will be used.',
         path='view.amb', optional=True
