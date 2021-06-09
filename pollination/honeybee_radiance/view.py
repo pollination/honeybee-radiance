@@ -41,7 +41,7 @@ class SplitView(Function):
     def split_view(self):
         return 'honeybee-radiance view split view.vf ' \
             '{{self.view_count}} --{{self.overture}} ' \
-            '--octree {{self.scene_file}} --rad-params {{self.radiance_parameters}} ' \
+            '--octree {{self.scene_file}} --rad-params "{{self.radiance_parameters}}" ' \
             '--folder output --log-file output/views_info.json'
 
     views_list = Outputs.list(
