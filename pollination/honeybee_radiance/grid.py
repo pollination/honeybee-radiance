@@ -68,8 +68,8 @@ class MergeFiles(Function):
 
     @command
     def merge_files(self):
-        return 'honeybee-radiance grid merge input_folder ' \
-            '{{self.name}} {{self.extension}} --name {{self.name}}'
+        return 'honeybee-radiance grid merge input_folder grid ' \
+            ' {{self.extension}} --name {{self.name}}'
 
     result_file = Outputs.file(
         description='Output result file.', path='{{self.name}}{{self.extension}}'

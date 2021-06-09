@@ -85,8 +85,8 @@ class MergeImages(Function):
 
     @command
     def merge_files(self):
-        return 'honeybee-radiance view merge input_folder ' \
-            '{{self.name}} {{self.extension}} --scale-factor {{self.scale_factor}} ' \
+        return 'honeybee-radiance view merge input_folder view ' \
+            '{{self.extension}} --scale-factor {{self.scale_factor}} ' \
             '--name {{self.name}}'
 
     result_image = Outputs.file(
