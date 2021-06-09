@@ -235,6 +235,8 @@ class AdjustSkyForMetric(Function):
     @command
     def adjust_sky_for_metric(self):
         return 'honeybee-radiance sky adjust-for-metric {{self.sky}} ' \
-            '--metric {{self.metric}} --name output.sky'
+            '--metric {{self.metric}}'
 
-    adjusted_sky = Outputs.file(description='Adjusted sky file.', path='output.sky')
+    adjusted_sky = Outputs.file(
+        description='Adjusted sky file.', path='{{self.metric}}.sky'
+    )
