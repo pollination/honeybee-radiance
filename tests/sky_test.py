@@ -1,6 +1,6 @@
 from pollination.honeybee_radiance.sky import AddRemoveSkyMatrix, \
     GenSky, GenSkyWithCertainIllum, CreateSkyDome, CreateSkyMatrix, \
-    AdjustSkyForMetric
+    AdjustSkyForMetric, CreateLeedSkies
 
 from queenbee.plugin.function import Function
 
@@ -38,4 +38,10 @@ def test_create_sky_matrix():
 def test_adjust_sky_for_metric():
     function = AdjustSkyForMetric().queenbee
     assert function.name == 'adjust-sky-for-metric'
+    assert isinstance(function, Function)
+
+
+def test_create_leed_skies():
+    function = CreateLeedSkies().queenbee
+    assert function.name == 'create-leed-skies'
     assert isinstance(function, Function)
