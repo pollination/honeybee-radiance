@@ -209,3 +209,62 @@ class AnnualDaylightMetrics(Function):
         description='Upper useful daylight illuminance results.',
         path='metrics/udi_upper'
     )
+
+
+@dataclass
+class LeedIlluminanceCredits(Function):
+    """Estimate LEED daylight credits from two point-in-time illuminance folders."""
+
+    folder = Inputs.folder(
+        description='Project folder for a LEED illuminance simulation. It should '
+        'contain a HBJSON model and two sub-folders of complete point-in-time '
+        'illuminance simulations labeled "9AM" and "3PM". These two sub-folders should '
+        'each have results folders that include a grids_info.json and .res files with '
+        'illuminance values for each sensor. If Meshes are found for the sensor '
+        'grids in the HBJSON file, they will be used to compute percentages '
+        'of occupied floor area that pass vs. fail. Otherwise, all sensors will '
+        'be assumed to represent an equal amount of floor area.',
+        path='raw_results'
+    )
+
+    glare_control_devices = Inputs.str(
+        description='A switch to note whether the model has "view-preserving automatic '
+        '(with manual override) glare-control devices," which means that illuminance '
+        'only needs to be above 300 lux and not between 300 and 3000 lux.',
+        default='glare-control',
+        spec={'type': 'string', 'enum': ['glare-control', 'no-glare-control']}
+    )
+
+    @command
+    def calculate_leed_credits(self):
+        return 'honeybee-radiance post-process leed-illuminance raw_results ' \
+            '--{{self.glare_control_devices}} --sub-folder ../pass_fail ' \
+            '--output-file credit_summary.json'
+
+    # outputs
+    pass_fail_results = Outputs.folder(
+        description='Pass/Fail results folder. This folder includes results for '
+        'each sensor indicating whether they pass or fail the LEED criteria.',
+        path='pass_fail'
+    )
+
+    pass_fail_9am = Outputs.folder(
+        description='Pass/Fail results for the 9AM simulation.',
+        path='metrics/9AM'
+    )
+
+    pass_fail_3pm = Outputs.folder(
+        description='Pass/Fail results for the 3PM simulation.',
+        path='metrics/3PM'
+    )
+
+    pass_fail_combined = Outputs.folder(
+        description='Pass/Fail results for the combined simulation.',
+        path='metrics/combined'
+    )
+
+    credit_summary = Outputs.folder(
+        description='JSON file containing the number of LEED credits achieved and '
+        'a summary of the percentage of the sensor grid area that meets the criteria.',
+        path='credit_summary.json'
+    )

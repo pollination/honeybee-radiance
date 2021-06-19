@@ -240,3 +240,33 @@ class AdjustSkyForMetric(Function):
     adjusted_sky = Outputs.file(
         description='Adjusted sky file.', path='{{self.metric}}.sky'
     )
+
+
+@dataclass
+class CreateLeedSkies(Function):
+    """Generate two climate-based lear skies for LEED v4.1 Daylight Option 2."""
+
+    wea = Inputs.file(
+        description='Path to a Typical Meteorological Year (TMY) .wea file. The file '
+        'must be annual with a timestep of 1 for a non-leap year.',
+        extensions=['wea'], path='sky.wea'
+    )
+
+    north = Inputs.int(
+        description='An angle for north direction. Default is 0.',
+        default=0, spec={'type': 'integer', 'maximum': 360, 'minimum': 0}
+    )
+
+    @command
+    def create_leed_skies(self):
+        return 'honeybee-radiance sky leed-illuminance sky.wea ' \
+            '--north {{self.north}} --folder output --log-file output/sky_info.json'
+
+    sky_list = Outputs.list(
+        description='A JSON array containing the information about the two '
+        'generated sky files.', path='output/sky_info.json'
+    )
+
+    output_folder = Outputs.folder(
+        description='Output folder with the generated sky files.', path='output'
+    )
