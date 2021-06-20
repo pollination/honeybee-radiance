@@ -248,21 +248,6 @@ class LeedIlluminanceCredits(Function):
         path='pass_fail'
     )
 
-    pass_fail_9am = Outputs.folder(
-        description='Pass/Fail results for the 9AM simulation.',
-        path='metrics/9AM'
-    )
-
-    pass_fail_3pm = Outputs.folder(
-        description='Pass/Fail results for the 3PM simulation.',
-        path='metrics/3PM'
-    )
-
-    pass_fail_combined = Outputs.folder(
-        description='Pass/Fail results for the combined simulation.',
-        path='metrics/combined'
-    )
-
     credit_summary = Outputs.folder(
         description='JSON file containing the number of LEED credits achieved and '
         'a summary of the percentage of the sensor grid area that meets the criteria.',
