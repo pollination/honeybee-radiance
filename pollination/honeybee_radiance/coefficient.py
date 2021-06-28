@@ -59,6 +59,11 @@ class DaylightCoefficient(Function):
         spec={'type': 'string', 'enum': ['a', 'd', 'f']}
     )
 
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf'
+    )
+
     @command
     def run_daylight_coeff(self):
         return 'honeybee-radiance dc scoeff scene.oct grid.pts sky.dome sky.mtx ' \

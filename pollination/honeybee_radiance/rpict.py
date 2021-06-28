@@ -45,6 +45,11 @@ class RayTracingPicture(Function):
         path='view.amb', optional=True
     )
 
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf'
+    )
+
     @command
     def ray_tracing(self):
         return 'honeybee-radiance rpict rpict scene.oct view.vf ' \
@@ -56,4 +61,3 @@ class RayTracingPicture(Function):
         description='Path to the High Dynamic Range (HDR) image file of the '
         'input view.', path='view.HDR'
     )
-

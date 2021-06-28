@@ -37,6 +37,11 @@ class SplitView(Function):
         default='-ab 2'
     )
 
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf'
+    )
+
     @command
     def split_view(self):
         return 'honeybee-radiance view split view.vf ' \
