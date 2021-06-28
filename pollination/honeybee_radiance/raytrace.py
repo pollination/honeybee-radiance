@@ -28,6 +28,11 @@ class RayTracingDaylightFactor(Function):
         description='Path to an octree file to describe the scene.', path='scene.oct'
     )
 
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf'
+    )
+
     @command
     def ray_tracing(self):
         return 'honeybee-radiance raytrace daylight-factor scene.oct grid.pts ' \
@@ -68,6 +73,11 @@ class RayTracingPointInTime(Function):
 
     scene_file = Inputs.file(
         description='Path to an octree file to describe the scene.', path='scene.oct'
+    )
+
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf'
     )
 
     @command

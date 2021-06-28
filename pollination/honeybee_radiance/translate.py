@@ -62,6 +62,11 @@ class CreateRadianceFolderGrid(Function):
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
 
+    bsdf_folder = Outputs.folder(
+        description='Folder containing any BSDF files needed for the simulation.',
+        path='model/bsdf'
+    )
+
     sensor_grids = Outputs.list(
         description='Information for exported sensor grids in grids subfolder.',
         path='model/grid/_info.json'
@@ -105,6 +110,11 @@ class CreateRadianceFolderView(Function):
             '--view "{{self.view_filter}}" --view-check'
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
+
+    bsdf_folder = Outputs.folder(
+        description='Folder containing any BSDF files needed for the simulation.',
+        path='model/bsdf'
+    )
 
     views = Outputs.list(
         description='Views information.', path='model/view/_info.json'
