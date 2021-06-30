@@ -64,7 +64,7 @@ class CreateRadianceFolderGrid(Function):
 
     bsdf_folder = Outputs.folder(
         description='Folder containing any BSDF files needed for the simulation.',
-        path='model/bsdf'
+        path='model/bsdf', optional=True
     )
 
     sensor_grids = Outputs.list(
@@ -113,7 +113,7 @@ class CreateRadianceFolderView(Function):
 
     bsdf_folder = Outputs.folder(
         description='Folder containing any BSDF files needed for the simulation.',
-        path='model/bsdf'
+        path='model/bsdf', optional=True
     )
 
     views = Outputs.list(
