@@ -1,4 +1,4 @@
-# Pollination Honeybee Radiance plugin.
+# Pollination Honeybee Radiance
 
 Pollination honeybee-radiance is a plugin that adds daylight simulation functions to Pollination.
 
