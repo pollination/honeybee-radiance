@@ -47,7 +47,7 @@ class RayTracingPicture(Function):
 
     bsdf_folder = Inputs.folder(
         description='Folder containing any BSDF files needed for ray tracing.',
-        path='model/bsdf'
+        path='model/bsdf', optional=True
     )
 
     @command
