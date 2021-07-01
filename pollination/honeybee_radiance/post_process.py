@@ -121,9 +121,18 @@ class SumRow(Function):
         path='input.mtx'
     )
 
+    divisor = Inputs.float(
+        description='An optional number, that the summed row will be divided by. '
+        'For example, this can be a timestep, which can be used to ensure that a '
+        'summed row of irradiance yields cumulative radiation over the entire '
+        'time period of the matrix.',
+        default=1
+    )
+
     @command
     def sum_mtx_row(self):
-        return 'honeybee-radiance post-process sum-row input.mtx --output sum.mtx'
+        return 'honeybee-radiance post-process sum-row input.mtx ' \
+            '--divisor {{self.divisor}} --output sum.mtx'
 
     # outputs
     output_mtx = Outputs.file(description='Newly created sum matrix.', path='sum.mtx')
@@ -147,6 +156,54 @@ class AverageRow(Function):
     # outputs
     output_mtx = Outputs.file(
         description='Newly created average matrix.', path='average.mtx'
+    )
+
+
+@dataclass
+class AnnualIrradianceMetrics(Function):
+    """Calculate annual irradiance metrics for annual irradiance simulation."""
+
+    folder = Inputs.folder(
+        description='A folder output from and annual irradiance recipe.',
+        path='raw_results'
+    )
+
+    wea = Inputs.file(
+        description='The .wea file that was used in the annual irradiance simulation. '
+        'This will be used to determine the duration of the analysis for computing '
+        'average irradiance.', path='weather.wea'
+    )
+
+    timestep = Inputs.int(
+        description='The timestep of the Wea file, which is used to ensure the '
+        'summed row of irradiance yields cumulative radiation over the time '
+        'period of the Wea.', default=1
+    )
+
+    @command
+    def calculate_irradiance_metrics(self):
+        return 'honeybee-radiance post-process annual-irradiance raw_results ' \
+            'weather.wea --timestep {{self.timestep}} --sub_folder ../metrics'
+
+    # outputs
+    metrics = Outputs.folder(
+        description='Annual irradiance metrics folder. This folder includes all '
+        'the other subfolders which are exposed as separate outputs.', path='metrics'
+    )
+
+    average_irradiance = Outputs.folder(
+        description='Average irradiance in W/m2 for each sensor over the wea period.',
+        path='metrics/average_irradiance'
+    )
+
+    peak_irradiance = Outputs.folder(
+        description='The highest irradiance value in W/m2 for each sensor during '
+        'the wea period.', path='metrics/average_irradiance'
+    )
+
+    cumulative_radiation = Outputs.folder(
+        description='The cumulative radiation in Wh/m2 for each sensor over '
+        'the wea period.', path='metrics/cumulative_radiation'
     )
 
 
