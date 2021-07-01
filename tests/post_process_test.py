@@ -1,5 +1,5 @@
 from pollination.honeybee_radiance.post_process import ConvertToBinary, SumRow, \
-    AnnualDaylightMetrics, LeedIlluminanceCredits
+    AnnualIrradianceMetrics, AnnualDaylightMetrics, LeedIlluminanceCredits
 
 from queenbee.plugin.function import Function
 
@@ -13,6 +13,12 @@ def test_convert_to_binary():
 def test_sum_row():
     function = SumRow().queenbee
     assert function.name == 'sum-row'
+    assert isinstance(function, Function)
+
+
+def test_annual_irradiance_metrics():
+    function = AnnualIrradianceMetrics().queenbee
+    assert function.name == 'annual-irradiance-metrics'
     assert isinstance(function, Function)
 
 
