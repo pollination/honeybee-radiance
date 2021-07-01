@@ -202,7 +202,7 @@ class AnnualIrradianceMetrics(Function):
     )
 
     cumulative_radiation = Outputs.folder(
-        description='The cumulative radiation in Wh/m2 for each sensor over '
+        description='The cumulative radiation in kWh/m2 for each sensor over '
         'the wea period.', path='metrics/cumulative_radiation'
     )
 
