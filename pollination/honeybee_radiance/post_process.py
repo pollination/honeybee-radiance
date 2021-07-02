@@ -183,7 +183,7 @@ class AnnualIrradianceMetrics(Function):
     @command
     def calculate_irradiance_metrics(self):
         return 'honeybee-radiance post-process annual-irradiance raw_results ' \
-            'weather.wea --timestep {{self.timestep}} --sub_folder ../metrics'
+            'weather.wea --timestep {{self.timestep}} --sub-folder ../metrics'
 
     # outputs
     metrics = Outputs.folder(
