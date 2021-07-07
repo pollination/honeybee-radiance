@@ -160,6 +160,38 @@ class AverageRow(Function):
 
 
 @dataclass
+class CumulativeRadiation(Function):
+    """Postprocess average irradiance (W/m2) into cumulative radiation (kWh/m2)."""
+
+    # inputs
+    average_irradiance = Inputs.file(
+        description='A single-column matrix of average irradiance values in '
+        'ASCII format', path='avg_irr.mtx'
+    )
+
+    wea = Inputs.file(
+        description='The .wea file that was used in the simulation. This will be '
+        'used to determine the duration of the analysis.', path='weather.wea'
+    )
+
+    timestep = Inputs.int(
+        description='The timestep of the Wea file, which is used to to compute '
+        'cumulative radiation over the time period of the Wea.', default=1
+    )
+
+    @command
+    def average_mtx_row(self):
+        return 'honeybee-radiance post-process cumulative-radiation avg_irr.mtx ' \
+            'weather.wea --timestep {{self.timestep}} --output radiation.mtx'
+
+    # outputs
+    radiation = Outputs.file(
+        description='Newly created matrix of cumulative radiation.',
+        path='radiation.mtx'
+    )
+
+
+@dataclass
 class AnnualIrradianceMetrics(Function):
     """Calculate annual irradiance metrics for annual irradiance simulation."""
 
