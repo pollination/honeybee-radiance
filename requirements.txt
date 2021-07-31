@@ -1,2 +1,2 @@
 pollination-dsl==0.12.3
-honeybee-radiance==1.43.17
+honeybee-radiance==1.43.18
