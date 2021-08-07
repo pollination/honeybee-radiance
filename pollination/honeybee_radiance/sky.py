@@ -129,6 +129,25 @@ class GenSkyWithCertainIllum(Function):
 
 
 @dataclass
+class GenUniformSkyByMetric(Function):
+    """Generates a uniform sky for various view percent metrics."""
+
+    metric = Inputs.str(
+        description='Text for the type of metric to be output from the calculation. '
+        'Choose from: sky-view, sky-exposure, spherical.',
+        default='sky-view',
+        spec={'type': 'string', 'enum': ['sky-view', 'sky-exposure', 'spherical']},
+    )
+
+    @command
+    def gen_uniform_by_metric(self):
+        return 'honeybee-radiance sky uniform-by-metric --metric {{self.metric}} ' \
+            '--name uniform.sky'
+
+    sky = Outputs.file(description='Generated sky file.', path='uniform.sky')
+
+
+@dataclass
 class CreateSkyDome(Function):
     """Create a skydome for daylight coefficient studies."""
 
