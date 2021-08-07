@@ -92,3 +92,49 @@ class RayTracingPointInTime(Function):
         'new line of the file. Values are in standard SI units of the input '
         'metric (lux, W/m2, cd/m2, W/m2-sr).', path='grid.res'
     )
+
+
+@dataclass
+class RayTracingViewPercent(Function):
+    """Run ray-tracing and post-process the results for a view percent simulation."""
+
+    radiance_parameters = Inputs.str(
+        description='Radiance parameters to be exposed within recipes. -I and -h are '
+        'usually already included in the fixed_radiance_parameters.',
+        default='-aa 0.1 -ad 2048 -ar 64'
+    )
+
+    metric = Inputs.str(
+        description='Text for the type of metric to be output from the calculation. '
+        'Choose from: sky-view, sky-exposure, spherical.',
+        default='sky-view',
+        spec={'type': 'string', 'enum': ['sky-view', 'sky-exposure', 'spherical']},
+    )
+
+    fixed_radiance_parameters = Inputs.str(
+        description='Parameters that are meant to be fixed for a given recipe and '
+        'should not be overwritten by radiance_parameters input.', default='-ab 1 -h'
+    )
+
+    grid = Inputs.file(description='Input sensor grid.', path='grid.pts')
+
+    scene_file = Inputs.file(
+        description='Path to an octree file to describe the scene.', path='scene.oct'
+    )
+
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf', optional=True
+    )
+
+    @command
+    def ray_tracing(self):
+        return 'honeybee-radiance raytrace view-percent scene.oct grid.pts ' \
+            '--rad-params "{{self.radiance_parameters}}" --rad-params-locked ' \
+            '"{{self.fixed_radiance_parameters}}" --metric {{self.metric}} ' \
+            '--output grid.res'
+
+    result = Outputs.file(
+        description='View percent results file. The results for each sensor is in a '
+        'new line.', path='grid.res'
+    )
