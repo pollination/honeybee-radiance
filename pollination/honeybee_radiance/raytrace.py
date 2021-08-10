@@ -95,8 +95,8 @@ class RayTracingPointInTime(Function):
 
 
 @dataclass
-class RayTracingViewPercent(Function):
-    """Run ray-tracing and post-process the results for a view percent simulation."""
+class RayTracingSkyView(Function):
+    """Run ray-tracing and post-process the results for a skyview simulation."""
 
     radiance_parameters = Inputs.str(
         description='Radiance parameters to be exposed within recipes. -I and -h are '
@@ -106,9 +106,9 @@ class RayTracingViewPercent(Function):
 
     metric = Inputs.str(
         description='Text for the type of metric to be output from the calculation. '
-        'Choose from: sky-view, sky-exposure, spherical.',
+        'Choose from: sky-view, sky-exposure.',
         default='sky-view',
-        spec={'type': 'string', 'enum': ['sky-view', 'sky-exposure', 'spherical']},
+        spec={'type': 'string', 'enum': ['sky-view', 'sky-exposure']},
     )
 
     fixed_radiance_parameters = Inputs.str(
@@ -131,10 +131,10 @@ class RayTracingViewPercent(Function):
     def ray_tracing(self):
         return 'honeybee-radiance raytrace view-percent scene.oct grid.pts ' \
             '--rad-params "{{self.radiance_parameters}}" --rad-params-locked ' \
-            '"{{self.fixed_radiance_parameters}}" --metric {{self.metric}} ' \
+            '"{{self.fixed_radiance_parameters}}" --{{self.metric}} ' \
             '--output grid.res'
 
     result = Outputs.file(
-        description='View percent results file. The results for each sensor is in a '
-        'new line.', path='grid.res'
+        description='Sky view/exposure results file. The percentage values for '
+        'each sensor is in a new line.', path='grid.res'
     )
