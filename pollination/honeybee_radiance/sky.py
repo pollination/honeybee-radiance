@@ -120,31 +120,17 @@ class GenSkyWithCertainIllum(Function):
         description='Sky illuminance level.'
     )
 
-    @command
-    def gen_overcast_sky(self):
-        return 'honeybee-radiance sky illuminance {{self.illuminance}} ' \
-            '--name overcast.sky'
-
-    sky = Outputs.file(description='Generated sky file.', path='overcast.sky')
-
-
-@dataclass
-class GenUniformSkyByMetric(Function):
-    """Generates a uniform sky for various view percent metrics."""
-
-    metric = Inputs.str(
-        description='Text for the type of metric to be output from the calculation. '
-        'Choose from: sky-view, sky-exposure, spherical.',
-        default='sky-view',
-        spec={'type': 'string', 'enum': ['sky-view', 'sky-exposure', 'spherical']},
+    uniform = Inputs.str(
+        description='A switch to indicate whether the sky is uniform instead of cloudy.',
+        default='cloudy', spec={'type': 'string', 'enum': ['cloudy', 'uniform']}
     )
 
     @command
-    def gen_uniform_by_metric(self):
-        return 'honeybee-radiance sky uniform-by-metric --metric {{self.metric}} ' \
-            '--name uniform.sky'
+    def gen_overcast_sky(self):
+        return 'honeybee-radiance sky illuminance {{self.illuminance}} ' \
+            '--{{self.uniform}} --name overcast.sky'
 
-    sky = Outputs.file(description='Generated sky file.', path='uniform.sky')
+    sky = Outputs.file(description='Generated sky file.', path='output.sky')
 
 
 @dataclass

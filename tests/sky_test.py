@@ -1,6 +1,6 @@
 from pollination.honeybee_radiance.sky import AddRemoveSkyMatrix, \
     GenSky, GenSkyWithCertainIllum, CreateSkyDome, CreateSkyMatrix, \
-    AdjustSkyForMetric, CreateLeedSkies, GenUniformSkyByMetric
+    AdjustSkyForMetric, CreateLeedSkies
 
 from queenbee.plugin.function import Function
 
@@ -26,12 +26,6 @@ def test_gen_sky_with_certain_illum():
 def test_create_sky_dome():
     function = CreateSkyDome().queenbee
     assert function.name == 'create-sky-dome'
-    assert isinstance(function, Function)
-
-
-def test_gen_uniform_sky_by_metric():
-    function = GenUniformSkyByMetric().queenbee
-    assert function.name == 'gen-uniform-sky-by-metric'
     assert isinstance(function, Function)
 
 
