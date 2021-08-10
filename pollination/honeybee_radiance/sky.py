@@ -120,6 +120,10 @@ class GenSkyWithCertainIllum(Function):
         description='Sky illuminance level.'
     )
 
+    ground_reflectance = Inputs.float(
+        default=0.2, description='Fractional value for ground reflectance.'
+    )
+
     uniform = Inputs.str(
         description='A switch to indicate whether the sky is uniform instead of cloudy.',
         default='cloudy', spec={'type': 'string', 'enum': ['cloudy', 'uniform']}
@@ -128,7 +132,8 @@ class GenSkyWithCertainIllum(Function):
     @command
     def gen_overcast_sky(self):
         return 'honeybee-radiance sky illuminance {{self.illuminance}} ' \
-            '--{{self.uniform}} --name overcast.sky'
+            '--ground {{self.ground_reflectance}} --{{self.uniform}} ' \
+            '--name overcast.sky'
 
     sky = Outputs.file(description='Generated sky file.', path='output.sky')
 
