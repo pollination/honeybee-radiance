@@ -133,7 +133,7 @@ class GenSkyWithCertainIllum(Function):
     def gen_overcast_sky(self):
         return 'honeybee-radiance sky illuminance {{self.illuminance}} ' \
             '--ground {{self.ground_reflectance}} --{{self.uniform}} ' \
-            '--name overcast.sky'
+            '--name output.sky'
 
     sky = Outputs.file(description='Generated sky file.', path='output.sky')
 
