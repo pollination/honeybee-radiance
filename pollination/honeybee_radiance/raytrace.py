@@ -104,16 +104,10 @@ class RayTracingSkyView(Function):
         default='-aa 0.1 -ad 2048 -ar 64'
     )
 
-    metric = Inputs.str(
-        description='Text for the type of metric to be output from the calculation. '
-        'Choose from: sky-view, sky-exposure.',
-        default='sky-view',
-        spec={'type': 'string', 'enum': ['sky-view', 'sky-exposure']},
-    )
-
     fixed_radiance_parameters = Inputs.str(
         description='Parameters that are meant to be fixed for a given recipe and '
-        'should not be overwritten by radiance_parameters input.', default='-ab 1 -h'
+        'should not be overwritten by radiance_parameters input.',
+        default='-I -ab 1 -h'
     )
 
     grid = Inputs.file(description='Input sensor grid.', path='grid.pts')
@@ -129,10 +123,9 @@ class RayTracingSkyView(Function):
 
     @command
     def ray_tracing(self):
-        return 'honeybee-radiance raytrace sky-view scene.oct grid.pts ' \
+        return 'honeybee-radiance raytrace daylight-factor scene.oct grid.pts ' \
             '--rad-params "{{self.radiance_parameters}}" --rad-params-locked ' \
-            '"{{self.fixed_radiance_parameters}}" --{{self.metric}} ' \
-            '--output grid.res'
+            '"{{self.fixed_radiance_parameters}}" --output grid.res'
 
     result = Outputs.file(
         description='Sky view/exposure results file. The percentage values for '
