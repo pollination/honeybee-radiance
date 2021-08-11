@@ -129,7 +129,7 @@ class RayTracingSkyView(Function):
 
     @command
     def ray_tracing(self):
-        return 'honeybee-radiance raytrace view-percent scene.oct grid.pts ' \
+        return 'honeybee-radiance raytrace sky-view scene.oct grid.pts ' \
             '--rad-params "{{self.radiance_parameters}}" --rad-params-locked ' \
             '"{{self.fixed_radiance_parameters}}" --{{self.metric}} ' \
             '--output grid.res'
