@@ -238,6 +238,11 @@ class AnnualIrradianceMetrics(Function):
         'the wea period.', path='metrics/cumulative_radiation'
     )
 
+    timestep_file = Outputs.file(
+        description='File to track the timestep of the results. Useful for '
+        'further result post-processing', path='raw_results/timestep.txt'
+    )
+
 
 @dataclass
 class AnnualDaylightMetrics(Function):
