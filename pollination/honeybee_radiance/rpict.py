@@ -29,7 +29,7 @@ class RayTracingPicture(Function):
     resolution = Inputs.int(
         description='An integer for the maximum dimension of the image in pixels '
         '(either width or height depending on the input view angle and type).',
-        spec={'type': 'integer', 'minimum': 1}, default=512
+        spec={'type': 'integer', 'minimum': 1}, default=800
     )
 
     scale_factor = Inputs.float(

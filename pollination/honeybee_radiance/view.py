@@ -6,12 +6,19 @@ from pollination_dsl.function import Function, command, Inputs, Outputs
 class SplitView(Function):
     """Split a single view file (.vf) into multiple smaller views."""
 
+    input_view = Inputs.file(description='Input view file.', path='view.vf')
+
     view_count = Inputs.int(
         description='Number of views into which the input view will be subdivided.',
         spec={'type': 'integer', 'minimum': 1}
     )
 
-    input_view = Inputs.file(description='Input view file.', path='view.vf')
+    resolution = Inputs.int(
+        description='An optional integer for the maximum dimension of the image in '
+        'pixels. This value will automatically lower the input view_count to ensure '
+        'the resulting images can be combined to meet this dimension.',
+        spec={'type': 'integer', 'minimum': 1}, default=800
+    )
 
     overture = Inputs.str(
         description='A switch to note whether an ambient file (.amb) should be '
@@ -45,7 +52,7 @@ class SplitView(Function):
     @command
     def split_view(self):
         return 'honeybee-radiance view split view.vf ' \
-            '{{self.view_count}} --{{self.overture}} ' \
+            '{{self.view_count}} --resolution {{self.resolution}} --{{self.overture}} ' \
             '--octree {{self.scene_file}} --rad-params "{{self.radiance_parameters}}" ' \
             '--folder output --log-file output/views_info.json'
 
