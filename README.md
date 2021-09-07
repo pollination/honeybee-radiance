@@ -1,6 +1,6 @@
 # Pollination Honeybee Radiance
 
-Pollination honeybee-radiance is a plugin that adds daylight simulation functions to Pollination.
+Pollination honeybee-radiance adds daylight simulation functions to Pollination.
 
 This plugin takes advantage of Ladybug Tools `honeybee-radiance` Python package CLI.
 For more information see: [PyPI](https://pypi.org/project/honeybee-radiance/) and
