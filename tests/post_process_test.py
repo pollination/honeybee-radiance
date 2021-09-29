@@ -1,5 +1,6 @@
 from pollination.honeybee_radiance.post_process import ConvertToBinary, SumRow, \
-    AnnualIrradianceMetrics, AnnualDaylightMetrics, LeedIlluminanceCredits
+    AnnualIrradianceMetrics, AnnualDaylightMetrics, LeedIlluminanceCredits, \
+    SolarTrackingSynthesis
 
 from queenbee.plugin.function import Function
 
@@ -31,4 +32,10 @@ def test_annual_daylight_metrics():
 def test_leed_illuminance_credits():
     function = LeedIlluminanceCredits().queenbee
     assert function.name == 'leed-illuminance-credits'
+    assert isinstance(function, Function)
+
+
+def test_solar_tracking_synthesis():
+    function = SolarTrackingSynthesis().queenbee
+    assert function.name == 'solar-tracking-synthesis'
     assert isinstance(function, Function)

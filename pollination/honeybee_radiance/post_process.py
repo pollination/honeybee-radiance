@@ -347,3 +347,48 @@ class LeedIlluminanceCredits(Function):
         'a summary of the percentage of the sensor grid area that meets the criteria.',
         path='credit_summary.json'
     )
+
+
+@dataclass
+class SolarTrackingSynthesis(Function):
+    """Synthesize a list of result folders to account for dynamic solar tracking."""
+
+    folder = Inputs.folder(
+        description='Results folder containing sub-folders that each represent a state '
+        'of the dynamic solar tracking system. Each sub-folder should contain .ill '
+        'files for that state and the names of these .ill files should be the '
+        'same across all sub-folders.',
+        path='raw_results'
+    )
+
+    sun_up_hours = Inputs.file(
+        description='The .txt file containing the sun-up hours that were simulated.',
+        path='sun-up-hours.txt'
+    )
+
+    wea = Inputs.file(
+        description='The .wea file that was used in the annual irradiance simulation. '
+        'This will be used to determine the solar positions.', path='weather.wea'
+    )
+
+    north = Inputs.int(
+        description='An angle for north direction. Default is 0.',
+        default=0, spec={'type': 'integer', 'maximum': 360, 'minimum': 0}
+    )
+
+    tracking_increment = Inputs.int(
+        description='An integer for the increment angle of each state in degrees.',
+        default=5, spec={'type': 'integer', 'maximum': 90, 'minimum': 1}
+    )
+
+    @command
+    def solar_tracking_synthesis(self):
+        return 'honeybee-radiance post-process solar-tracking raw_results ' \
+            'sun-up-hours.txt weather.wea --north {{self.north}} ' \
+            '--tracking-increment {{self.tracking_increment}} --sub-folder ../final'
+
+    # outputs
+    results = Outputs.folder(
+        description='Result folder containing synthesized .ill files that correspond '
+        'to the tracking behavior.', path='final'
+    )
