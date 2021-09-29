@@ -29,25 +29,6 @@ class SplitGrid(Function):
 
 
 @dataclass
-class SplitGridFromFolder(SplitGrid):
-    """Split a single sensor grid file into multiple grids based on maximum number
-    of sensors.
-
-    This function takes a folder of sensor grids and find the target grid based on
-    grid-name.
-    """
-
-    name = Inputs.str(description='Grid name.')
-
-    input_grid = Inputs.folder(description='Path to sensor grids folder.', path='.')
-
-    @command
-    def split_grid(self):
-        return 'honeybee-radiance grid split {{self.name}}.pts ' \
-            '{{self.sensor_count}} --folder output --log-file output/grids_info.json'
-
-
-@dataclass
 class MergeFiles(Function):
     """Merge several files with similar starting name into one."""
 
