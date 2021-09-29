@@ -11,13 +11,13 @@ For running all the functionalities on your local machine you need to install
 release of Radiance from
 [GitHub](https://github.com/LBNL-ETA/Radiance/releases/tag/012cb178).
 
-# Functions
+## Functions
 
 You can see the list of available functions in honeybee-radiance plugin
 [here](https://app.pollination.cloud/plugins/ladybug-tools/honeybee-radiance)
 on Pollination.
 
-# Example
+## Example
 
 For a real-world example see Ladybug Tools recipes:
 
