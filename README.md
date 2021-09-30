@@ -21,5 +21,8 @@ on Pollination.
 
 For a real-world example see Ladybug Tools recipes:
 
-- [Annual daylight recipe](https://github.com/pollination/annual-daylight)
+- [Annual Daylight recipe](https://github.com/pollination/annual-daylight)
+- [Annual Irradiance recipe](https://github.com/pollination/annual-irradiance)
+- [Point-in-Time Grid recipe](https://github.com/pollination/point-in-time-grid)
+- [Point-in-Time View recipe](https://github.com/pollination/point-in-time-view)
 - [Daylight factor recipe](https://github.com/pollination/daylight-factor)
