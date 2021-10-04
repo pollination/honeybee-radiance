@@ -33,7 +33,7 @@ class SplitGridFolder(Function):
     """Create new sensor grids folder with evenly distribute sensors.
 
     This function creates a new folder with evenly distributed sensor grids. The folder
-    will include a ``_dist_info.json`` file which has the information to recreate the
+    will include a ``_redist_info.json`` file which has the information to recreate the
     original input files from this folder and the results generated based on the grids
     in this folder.
     """
@@ -52,7 +52,8 @@ class SplitGridFolder(Function):
     sensor_count = Inputs.int(
         description='Minimum number of sensors in each output grid. Use this number to '
         'ensure the number of sensors in output grids never gets very small. To ignore '
-        'this limitation set the value to 1. Default: 2000.', default=2000,
+        'this limitation set the value to 1 otherwise the number of grids will be '
+        'adjusted based on minimum sensor count if needed. Default: 2000.', default=2000,
         spec={'type': 'integer', 'minimum': 1}
     )
 
@@ -68,7 +69,7 @@ class SplitGridFolder(Function):
 
     dist_info = Outputs.file(
         description='A JSON file with distribution information.',
-        path='output_folder/_dist_info.json'
+        path='output_folder/_redist_info.json'
     )
 
     output_folder = Outputs.folder(
