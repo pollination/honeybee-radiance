@@ -29,6 +29,54 @@ class SplitGrid(Function):
 
 
 @dataclass
+class SplitGridFolder(Function):
+    """Create new sensor grids folder with evenly distribute sensors.
+
+    This function creates a new folder with evenly distributed sensor grids. The folder
+    will include a ``_dist_info.json`` file which has the information to recreate the
+    original input files from this folder and the results generated based on the grids
+    in this folder.
+    """
+
+    input_folder = Inputs.folder(
+        description='Input sensor grids folder.',
+        path='input_folder'
+    )
+
+    grid_count = Inputs.int(
+        description='Number of output sensor grids to be created. This number is '
+        'usually equivalent to the number of processes that will be used to run the '
+        'simulations in parallel.', spec={'type': 'integer', 'minimum': 1}
+    )
+
+    sensor_count = Inputs.int(
+        description='Minimum number of sensors in each output grid. Use this number to '
+        'ensure the number of sensors in output grids never gets very small. To ignore '
+        'this limitation set the value to 1. Default: 2000.', default=2000,
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    @command
+    def split_grid_folder(self):
+        return 'honeybee-radiance grid split-folder ./input_folder ./output_folder ' \
+            '{{self.grid_count}} --min-sensor-count {{self.sensor_count}}'
+
+    sensor_grids = Outputs.list(
+        description='A JSON array that includes information about generated sensor '
+        'grids.', path='output_folder/_info.json'
+    )
+
+    dist_info = Outputs.file(
+        description='A JSON file with distribution information.',
+        path='output_folder/_dist_info.json'
+    )
+
+    output_folder = Outputs.folder(
+        description='Output folder with new sensor grids.', path='output_folder'
+    )
+
+
+@dataclass
 class MergeFiles(Function):
     """Merge several files with similar starting name into one."""
 
@@ -54,4 +102,29 @@ class MergeFiles(Function):
 
     result_file = Outputs.file(
         description='Output result file.', path='{{self.name}}{{self.extension}}'
+    )
+
+
+@dataclass
+class MergeFolderData(Function):
+    """Restructure files in a distributed folder."""
+
+    input_folder = Inputs.folder(
+        description='Input sensor grids folder.',
+        path='input_folder'
+    )
+
+    extension = Inputs.str(
+        description='Extension of the files to collect data from. It will be ``pts`` '
+        'for sensor files. Another common extension is ``ill`` for the results of '
+        'daylight studies.'
+    )
+
+    @command
+    def merge_files(self):
+        return 'honeybee-radiance grid merge-folder ./input_folder ./output_folder ' \
+            ' {{self.extension}}'
+
+    output_folder = Outputs.folder(
+        description='Output folder with newly generated files.', path='output_folder'
     )
