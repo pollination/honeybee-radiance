@@ -30,7 +30,7 @@ class SplitGrid(Function):
 
 @dataclass
 class SplitGridFolder(Function):
-    """Create new sensor grids folder with evenly distribute sensors.
+    """Create new sensor grids folder with evenly distributed sensors.
 
     This function creates a new folder with evenly distributed sensor grids. The folder
     will include a ``_redist_info.json`` file which has the information to recreate the
@@ -43,24 +43,35 @@ class SplitGridFolder(Function):
         path='input_folder'
     )
 
-    grid_count = Inputs.int(
-        description='Number of output sensor grids to be created. This number is '
-        'usually equivalent to the number of processes that will be used to run the '
-        'simulations in parallel.', spec={'type': 'integer', 'minimum': 1}
+    cpu_count = Inputs.int(
+        description='The number of processors to be used as a result of the '
+        'grid-splitting operation. This value is equivalent to the number of '
+        'sensor grids that will be generated when the cpus-per-grid is left as 1.',
+        spec={'type': 'integer', 'minimum': 1}
     )
 
-    sensor_count = Inputs.int(
-        description='Minimum number of sensors in each output grid. Use this number to '
-        'ensure the number of sensors in output grids never gets very small. To ignore '
-        'this limitation set the value to 1 otherwise the number of grids will be '
-        'adjusted based on minimum sensor count if needed. Default: 2000.', default=2000,
+    cpus_per_grid = Inputs.int(
+        description='An integer to be divided by the cpu-count to yield a final number '
+        'of grids to generate. This is useful in workflows where there are multiple '
+        'processors acting on a single grid. To ignore this limitation, set the '
+        'value to 1.', spec={'type': 'integer', 'minimum': 1}, default=1
+    )
+
+    min_sensor_count = Inputs.int(
+        description='The minimum number of sensors in each output grid. Use this '
+        'number to ensure the number of sensors in output grids never gets very '
+        'small. This input will take precedence over the input cpu-count and '
+        'cpus-per-grid when specified. To ignore this limitation, set the value to 1. '
+        'Otherwise the number of grids will be adjusted based on minimum sensor '
+        'count if needed. Default: 2000.', default=2000,
         spec={'type': 'integer', 'minimum': 1}
     )
 
     @command
     def split_grid_folder(self):
         return 'honeybee-radiance grid split-folder ./input_folder ./output_folder ' \
-            '{{self.grid_count}} --min-sensor-count {{self.sensor_count}}'
+            '{{self.cpu_count}} --grid-divisor {{self.cpus_per_grid}} ' \
+            '--min-sensor-count {{self.min_sensor_count}}'
 
     sensor_grids = Outputs.list(
         description='A JSON array that includes information about generated sensor '
