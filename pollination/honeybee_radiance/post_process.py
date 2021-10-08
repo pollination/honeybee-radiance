@@ -282,6 +282,11 @@ class AnnualDaylightMetrics(Function):
         'subfolders which are also exposed as separate outputs.', path='metrics'
     )
 
+    metrics_info = Outputs.file(
+        description='The information for metrics subfolders as a JSON file.',
+        path='metrics/metrics_info.json'
+    )
+
     daylight_autonomy = Outputs.folder(
         description='Daylight autonomy results.', path='metrics/da'
     )
