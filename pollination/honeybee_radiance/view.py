@@ -95,11 +95,17 @@ class MergeImages(Function):
         'output image as it is filtered for anti-aliasing.', default=1
     )
 
+    original_view = Inputs.file(
+        description='Full path to the original view file.',
+        path='original-view.vf',
+        optional=True
+    )
+
     @command
     def merge_files(self):
         return 'honeybee-radiance view merge input_folder view ' \
             '{{self.extension}} --scale-factor {{self.scale_factor}} ' \
-            '--name {{self.name}}'
+            '--name {{self.name}} --view original-view.vf'
 
     result_image = Outputs.file(
         description='Output combined image file.', path='{{self.name}}.HDR'
