@@ -16,7 +16,7 @@ class CreateRadianceFolder(Function):
     )
 
     grid_filter = Inputs.str(
-        description='Text for a grid identifer or a pattern to filter the sensor grids '
+        description='Text for a grid identifier or a pattern to filter the sensor grids '
         'of the model that are simulated. For instance, first_floor_* will simulate '
         'only the sensor grids that have an identifier that starts with '
         'first_floor_. By default, all grids in the model will be simulated.',
@@ -24,7 +24,7 @@ class CreateRadianceFolder(Function):
     )
 
     view_filter = Inputs.str(
-        description='Text for a view identifer or a pattern to filter the views '
+        description='Text for a view identifier or a pattern to filter the views '
         'of the model that are simulated. For instance, first_floor_* will simulate '
         'only the views that have an identifier that starts with first_floor_. By '
         'default, all views in the model will be simulated.', default='*'
@@ -48,7 +48,7 @@ class CreateRadianceFolderGrid(Function):
     )
 
     grid_filter = Inputs.str(
-        description='Text for a grid identifer or a pattern to filter the sensor grids '
+        description='Text for a grid identifier or a pattern to filter the sensor grids '
         'of the model that are simulated. For instance, first_floor_* will simulate '
         'only the sensor grids that have an identifier that starts with '
         'first_floor_. By default, all grids in the model will be simulated.',
@@ -98,7 +98,7 @@ class CreateRadianceFolderView(Function):
     )
 
     view_filter = Inputs.str(
-        description='Text for a view identifer or a pattern to filter the views '
+        description='Text for a view identifier or a pattern to filter the views '
         'of the model that are simulated. For instance, first_floor_* will simulate '
         'only the views that have an identifier that starts with first_floor_. By '
         'default, all views in the model will be simulated.', default='*'
