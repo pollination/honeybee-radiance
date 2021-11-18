@@ -1,5 +1,11 @@
-from pollination.honeybee_radiance.view import SplitView, MergeImages
+from pollination.honeybee_radiance.view import SplitViewCount, SplitView, MergeImages
 from queenbee.plugin.function import Function
+
+
+def test_split_view_count():
+    function = SplitViewCount().queenbee
+    assert function.name == 'split-view-count'
+    assert isinstance(function, Function)
 
 
 def test_split_view():

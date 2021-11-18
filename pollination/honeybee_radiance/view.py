@@ -3,6 +3,31 @@ from pollination_dsl.function import Function, command, Inputs, Outputs
 
 
 @dataclass
+class SplitViewCount(Function):
+    """Get the number of times to split each view in a model using a CPU count."""
+
+    views_file = Inputs.file(
+        description='Views information JSON file.', path='view_info.json'
+    )
+
+    cpu_count = Inputs.int(
+        description='The number of processors to be used as a result of the '
+        'grid-splitting operation.',
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    @command
+    def split_view_count(self):
+        return 'honeybee-radiance view split-count view_info.json ' \
+            '{{self.cpu_count}} --output-file view-split-count.txt'
+
+    split_count = Outputs.int(
+        description='An integer for the number of times to split the view.',
+        path='view-split-count.txt'
+    )
+
+
+@dataclass
 class SplitView(Function):
     """Split a single view file (.vf) into multiple smaller views."""
 
