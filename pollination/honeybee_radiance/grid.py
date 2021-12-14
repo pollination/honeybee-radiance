@@ -140,3 +140,67 @@ class MergeFolderData(Function):
     output_folder = Outputs.folder(
         description='Output folder with newly generated files.', path='output_folder'
     )
+
+
+@dataclass
+class MirrorGrid(Function):
+    """Split a single sensor grid file into multiple smaller grids."""
+
+    input_grid = Inputs.file(description='Input grid file.', path='grid.pts')
+
+    vector = Inputs.str(
+        description='A string of three values (separated by spaces) to standardize '
+        'the direction of all rays in the output files. For example, inputting '
+        '"0 0 1" will ensure that the output sensor files all have vectors pointing '
+        'up in the base file and down in the mirrored file. If unspecified, the '
+        'direction of sensors in the input file will be used.', default='0 0 1'
+    )
+
+    @command
+    def mirror_grid(self):
+        return 'honeybee-radiance grid mirror grid.pts --vector "{{self.vector}}" ' \
+            '--name result --suffix ref'
+
+    base_file = Outputs.file(
+        description='A sensor grid file facing the direction of the vector.',
+        path='result.pts'
+    )
+
+    mirrored_file = Outputs.file(
+        description='A sensor grid file facing the opposite direction of the vector.',
+        path='result_ref.pts'
+    )
+
+
+@dataclass
+class RadiantEnclosureInfo(Function):
+    """Get a JSON of radiant enclosure information from a .pts file of a sensor grid.
+
+    This enclosure info is intended to be consumed by thermal mapping functions.
+    """
+
+    model = Inputs.file(
+        description='Path to input HBJSON or HBPkl file.',
+        path='model.hbjson'
+    )
+
+    input_grid = Inputs.file(description='Input grid file.', path='grid.pts')
+
+    air_boundary_distance = Inputs.str(
+        description='A number to set the distance from air boundaries over which '
+        'values should be interpolated. Using 0 will assume a hard edge between '
+        'Rooms of the same radiant enclosures. This can include the units of '
+        'the distance (eg. 3ft) or, if no units are provided the value will '
+        'be interpreted in the honeybee model units.', default='2m'
+    )
+
+    @command
+    def radiant_enclosure_info(self):
+        return 'honeybee-radiance grid enclosure-info model.hbjson grid.pts ' \
+            '--air-boundary-distance {{self.air_boundary_distance}} ' \
+            '--output-file enclosure.json'
+
+    enclosure_file = Outputs.file(
+        description='A JSON file that includes radiant enclosure information '
+        'for the sensors', path='enclosure.json'
+    )
