@@ -89,6 +89,46 @@ class AddSkyMatrix(Function):
 
 
 @dataclass
+class SubtractSkyMatrix(Function):
+    """Subtract direct sky from total sky to get indirect sky."""
+
+    total_sky_matrix = Inputs.file(
+        description='Path to matrix for total sky contribution.',
+        path='sky.ill', extensions=['ill', 'dc']
+    )
+
+    direct_sky_matrix = Inputs.file(
+        description='Path to matrix for direct sky contribution.',
+        path='sky_dir.ill', extensions=['ill', 'dc']
+    )
+
+    conversion = Inputs.str(
+        description='Conversion as a string which will be passed to rmtxop -c option.',
+        default=' '
+    )
+
+    output_format = Inputs.str(
+        default='a', description='Output file format. a for ASCII, d for double, f for '
+        'float and c for RGBE color.',
+        spec={'type': 'string', 'enum': ['a', 'd', 'f', 'c']}
+    )
+
+    header = Inputs.str(
+        default='remove',
+        description='An input to indicate if header should be kept or removed from the'
+        'output matrix.', spec={'type': 'string', 'enum': ['keep', 'remove']}
+    )
+
+    @command
+    def create_matrix(self):
+        return 'honeybee-radiance mtxop operate-two sky.ill sky_dir.ill ' \
+            '--operator "-" --{{self.header}}-header --conversion "{{self.conversion}}" ' \
+            '--output-mtx final.ill --output-format {{self.output_format}}'
+
+    results_file = Outputs.file(description='Radiance matrix file.', path='final.ill')
+
+
+@dataclass
 class GenSky(Function):
     """Generates a sky from a honeybee-radiance sky string."""
 
