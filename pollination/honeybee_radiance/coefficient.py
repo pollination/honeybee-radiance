@@ -53,6 +53,12 @@ class DaylightCoefficient(Function):
         default='sensor', spec={'type': 'string', 'enum': ['sensor', 'datetime']}
     )
 
+    header = Inputs.str(
+        default='keep',
+        description='An input to indicate if header should be kept or removed from the'
+        'output matrix.', spec={'type': 'string', 'enum': ['keep', 'remove']}
+    )
+
     output_format = Inputs.str(
         description='Output format for converted results. Valid inputs are a, f and '
         'd for ASCII, float or double.', default='f',
@@ -70,6 +76,7 @@ class DaylightCoefficient(Function):
             '--sensor-count {{self.sensor_count}} --output results.ill --rad-params ' \
             '"{{self.radiance_parameters}}" --rad-params-locked '\
             '"{{self.fixed_radiance_parameters}}" --conversion "{{self.conversion}}" ' \
-            '--output-format {{self.output_format}} --order-by-{{self.order_by}}'
+            '--output-format {{self.output_format}} --order-by-{{self.order_by}} ' \
+            '--{{self.header}}-header'
 
     result_file = Outputs.file(description='Output result file.', path='results.ill')
