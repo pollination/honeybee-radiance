@@ -19,7 +19,7 @@ on Pollination.
 
 ## Example
 
-For a real-world example see Ladybug Tools recipes:
+For real-world examples see any of these Ladybug Tools recipes for Pollination:
 
 - [Annual Daylight recipe](https://github.com/pollination/annual-daylight)
 - [Annual Irradiance recipe](https://github.com/pollination/annual-irradiance)
