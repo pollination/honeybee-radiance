@@ -283,8 +283,9 @@ class AnnualDaylightMetrics(Function):
     )
 
     metrics_info = Outputs.file(
-        description='The information for metrics subfolders as a JSON file.',
-        path='metrics/metrics_info.json'
+        description='A config file with metrics subfolders information for '
+        'visualization. This config file is compatible with honeybee-vtk config.',
+        path='metrics/config.json'
     )
 
     daylight_autonomy = Outputs.folder(
