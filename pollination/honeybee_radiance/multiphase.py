@@ -191,3 +191,48 @@ class DaylightMatrixGrouping(Function):
         description='Grouped apertures information file.',
         path='output/groups/_info.json'
     )
+
+
+@dataclass
+class DaylightMatrix(Function):
+    """Calculate daylight matrix for a sender file."""
+
+    radiance_parameters = Inputs.str(
+        description='Radiance parameters. -aa 0 is already included in '
+        'the command.', default=''
+    )
+
+    fixed_radiance_parameters = Inputs.str(
+        description='Radiance parameters. -aa 0 is already included in '
+        'the command.', default='-aa 0'
+    )
+
+    sender_file = Inputs.file(
+        description='Path to a sender file.', path='sender.rad',
+        extensions=['rad']
+    )
+
+    receiver_file = Inputs.file(
+        description='Path to a receiver file.', path='receiver.rad',
+        extensions=['rad']
+    )
+
+    scene_file = Inputs.file(
+        description='Path to an octree file to describe the scene.', path='scene.oct',
+        extensions=['oct']
+    )
+
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf', optional=True
+    )
+
+    @command
+    def run_daylight_mtx(self):
+        return 'honeybee-radiance multi-phase daylight-matrix sender.rad receiver.rad ' \
+            'scene.oct --output output.dmx --rad-params "{{self.radiance_parameters}}" ' \
+            '--rad-params-locked "{{self.fixed_radiance_parameters}}"'
+
+    daylight_mtx = Outputs.file(
+        description='Output daylight matrix file.', path='output.dmx'
+    )
