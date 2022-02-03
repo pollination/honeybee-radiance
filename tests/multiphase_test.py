@@ -1,5 +1,4 @@
-from pollination.honeybee_radiance.multiphase import ViewMatrix
-from pollination.honeybee_radiance.multiphase import DaylightMatrix
+from pollination.honeybee_radiance.multiphase import ViewMatrix, FluxTransfer
 from queenbee.plugin.function import Function
 
 
@@ -9,7 +8,7 @@ def test_view_mtx():
     assert isinstance(function, Function)
 
 
-def test_daylight_mtx():
-    function = DaylightMatrix().queenbee
-    assert function.name == 'daylight-matrix'
+def test_flux_transfer():
+    function = FluxTransfer().queenbee
+    assert function.name == 'flux-transfer'
     assert isinstance(function, Function)
