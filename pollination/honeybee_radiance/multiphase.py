@@ -59,8 +59,8 @@ class ViewMatrix(Function):
 
 
 @dataclass
-class DaylightMatrix(Function):
-    """Calculate daylight matrix for a sender file."""
+class FluxTransfer(Function):
+    """Calculate flux transfer for a sender and receiver file."""
 
     radiance_parameters = Inputs.str(
         description='Radiance parameters. -aa 0 is already included in '
@@ -93,11 +93,12 @@ class DaylightMatrix(Function):
     )
 
     @command
-    def run_daylight_mtx(self):
-        return 'honeybee-radiance multi-phase daylight-matrix sender.rad receiver.rad ' \
-            'scene.oct --output output.dmx --rad-params "{{self.radiance_parameters}}" ' \
-            '--rad-params-locked "{{self.fixed_radiance_parameters}}"'
+    def run_flux_transfer(self):
+        return 'honeybee-radiance multi-phase flux-transfer sender.rad receiver.rad ' \
+            'scene.oct --output flux_transfer.mtx --rad-params ' \
+            '"{{self.radiance_parameters}}" -rad-params-locked ' \
+            '"{{self.fixed_radiance_parameters}}"'
 
-    daylight_mtx = Outputs.file(
-        description='Output daylight matrix file.', path='output.dmx'
+    flux_transfer_mtx = Outputs.file(
+        description='Output flux transfer matrix file.', path='flux_transfer.mtx'
     )
