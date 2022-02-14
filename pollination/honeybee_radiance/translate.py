@@ -37,6 +37,11 @@ class CreateRadianceFolder(Function):
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
 
+    receivers = Outputs.list(
+        description='Information for all the receivers.',
+        path='model/receiver/_info.json', optional=True
+    )
+
 
 @dataclass
 class CreateRadianceFolderGrid(Function):
@@ -87,6 +92,11 @@ class CreateRadianceFolderGrid(Function):
         path='model/grid/_model_grids_info.json'
     )
 
+    receivers = Outputs.list(
+        description='Information for the states for all dynamic apertures.',
+        path='model/receiver/_info.json', optional=True
+    )
+
 
 @dataclass
 class CreateRadianceFolderView(Function):
@@ -123,6 +133,12 @@ class CreateRadianceFolderView(Function):
     views_file = Outputs.file(
         description='Views information JSON file.', path='model/view/_info.json'
     )
+
+    receivers = Outputs.list(
+        description='Information for the states for all dynamic apertures.',
+        path='model/receiver/_info.json', optional=True
+    )
+
 
 
 @dataclass
