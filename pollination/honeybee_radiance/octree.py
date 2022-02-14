@@ -44,3 +44,55 @@ class CreateOctreeWithSky(CreateOctree):
         return 'honeybee-radiance octree from-folder model --output scene.oct ' \
             '--{{self.include_aperture}}-aperture --{{self.black_out}} ' \
             '--add-before sky.sky'
+
+
+@dataclass
+class CreateOctrees(Function):
+    """Generate several octree from a Radiance folder.
+    
+    Use this function to create octrees for multi-phase simulations.
+    """
+
+    # inputs
+    model = Inputs.folder(description='Path to Radiance model folder.', path='model')
+
+    phase = Inputs.int(
+        description='Select a multiphase study for which octrees will be created. '
+        '3-phase includes 2-phase, and 5-phase includes 3-phase and 2-phase. The valid '
+        'values are 2, 3 and 5',
+        default=5
+    )
+    sunpath = Inputs.file(
+        description='Path to sunpath file.', path='sun.path', optional=True
+    )
+
+    @command
+    def create_octrees(self):
+        return 'honeybee-radiance octree from-folder-multiphase model ' \
+            '--sun-path sun.path --output-folder octree --phase {{self.phase}}'
+
+    # outputs
+    scene_folder = Outputs.folder(
+        description='Output octrees folder.', path='octree')
+
+    scene_info = Outputs.list(
+        description='Output octree files list.', path='octree/multi_phase.json'
+    )
+
+    two_phase_info = Outputs.list(
+        description='Output octree files list for the 2-Phase studies.',
+        path='octree/two_phase.json',
+    )
+
+    three_phase_info = Outputs.list(
+        description='Output octree files list for the 3-Phase studies.',
+        path='octree/three_phase.json',
+        optional=True
+    )
+
+    five_phase_info = Outputs.list(
+        description='Output octree files list for the 5-Phase studies.',
+        path='octree/five_phase.json',
+        optional=True
+    )
+
