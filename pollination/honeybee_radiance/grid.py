@@ -132,10 +132,15 @@ class MergeFolderData(Function):
         'daylight studies.'
     )
 
+    dist_info = Inputs.file(
+        description='Distribution information file.',
+        path='dist_info.json', optional=True
+    )
+
     @command
-    def merge_files(self):
+    def merge_files_in_folder(self):
         return 'honeybee-radiance grid merge-folder ./input_folder ./output_folder ' \
-            ' {{self.extension}}'
+            ' {{self.extension}} --dist-info dist_info.json'
 
     output_folder = Outputs.folder(
         description='Output folder with newly generated files.', path='output_folder'
