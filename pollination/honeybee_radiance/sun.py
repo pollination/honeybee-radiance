@@ -33,6 +33,36 @@ class CreateSunMatrix(Function):
 
 
 @dataclass
+class CreateSunMtx(Function):
+    """Generate a Radiance sun matrix using honeybee-radiance methods."""
+
+    north = Inputs.int(
+        description='An angle for north direction. Default is 0.',
+        default=0, spec={'type': 'integer', 'maximum': 360, 'minimum': 0}
+    )
+
+    wea = Inputs.file(
+        description='Path to a wea file.', extensions=['wea'], path='sky.wea'
+    )
+
+    output_type = Inputs.str(
+        description='Output type which can be visible or solar.', default='visible',
+        spec={'type': 'string', 'enum': ['visible', 'solar']}
+    )
+
+    @command
+    def generate_sun_mtx(self):
+        return 'honeybee-radiance sunpath radiance sky.wea --name sunpath '\
+            '--{{self.output_type}} --north {{self.north}}'
+
+    sunpath = Outputs.file(description='Output sunpath matrix.', path='sunpath.mtx')
+
+    sun_modifiers = Outputs.file(
+        description='List of sun modifiers in sunpath.', path='sunpath.mod'
+    )
+
+
+@dataclass
 class ParseSunUpHours(Function):
     """Parse sun up hours from sun modifiers file."""
 
