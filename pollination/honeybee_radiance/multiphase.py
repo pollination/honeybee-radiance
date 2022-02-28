@@ -172,10 +172,28 @@ class DaylightMatrixGrouping(Function):
         description='Path to rflux sky file.', path='sky.dome'
     )
 
+    size = Inputs.float(
+        description='Aperture grid size. A lower number will give a finer grid and more '
+        'accurate results but the calculation time will increase.', default=0.2
+    )
+
+    threshold = Inputs.float(
+        description='A number that determines if two apertures/aperture groups can be '
+        'clustered. A higher number is more accurate but will also increase the number '
+        'of aperture groups', default=0.001
+    )
+
+    ambient_division = Inputs.int(
+        description='Number of ambient divisions (-ad) for view factor calculation in '
+        'rfluxmtx. Increasing the number will give more accurate results but also '
+        'increase the calculation time.', default=1000
+    )
+
     @command
     def group_apertures(self):
         return 'honeybee-radiance multi-phase dmtx-group model scene.oct sky.dome ' \
-            '--output-folder output --name _info'
+            '--output-folder output --name _info --size {{self.size}} ' \
+            '--threshold {{self.threshold}} --ambient-division {{self.ambient_division}}'
 
     grouped_apertures_folder = Outputs.folder(
         description='Output folder to grouped apertures.',
