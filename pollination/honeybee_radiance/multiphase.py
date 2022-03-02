@@ -172,28 +172,21 @@ class DaylightMatrixGrouping(Function):
         description='Path to rflux sky file.', path='sky.dome'
     )
 
-    size = Inputs.float(
-        description='Aperture grid size. A lower number will give a finer grid and more '
-        'accurate results but the calculation time will increase.', default=0.2
-    )
-
-    threshold = Inputs.float(
-        description='A number that determines if two apertures/aperture groups can be '
-        'clustered. A higher number is more accurate but will also increase the number '
-        'of aperture groups', default=0.001
-    )
-
-    ambient_division = Inputs.int(
-        description='Number of ambient divisions (-ad) for view factor calculation in '
-        'rfluxmtx. Increasing the number will give more accurate results but also '
-        'increase the calculation time.', default=1000
+    dmtx_group_params = Inputs.str(
+        description='A string to change the parameters for aperture grouping for '
+        'daylight matrix calculation. Valid keys are -s for aperture grid size, -t for '
+        'the threshold that determines if two apertures/aperture groups can be '
+        'clustered, and -ad for ambient divisions used in view factor calculation '
+        'The default is -s 0.2 -t 0.001 -ad 1000. The order of the keys is not '
+        'important and you can include one or all of them. For instance if you only '
+        'want to change the aperture grid size to 0.5 you should use -s 0.5 as the '
+        'input.', default='-s 0.2 -t 0.001 -ad 1000'
     )
 
     @command
     def group_apertures(self):
         return 'honeybee-radiance multi-phase dmtx-group model scene.oct sky.dome ' \
-            '--output-folder output --name _info --size {{self.size}} ' \
-            '--threshold {{self.threshold}} --ambient-division {{self.ambient_division}}'
+            '--output-folder output --name _info {{self.dmtx_group_params}}'
 
     grouped_apertures_folder = Outputs.folder(
         description='Output folder to grouped apertures.',
