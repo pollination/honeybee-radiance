@@ -49,7 +49,7 @@ class CreateOctreeWithSky(CreateOctree):
 @dataclass
 class CreateOctrees(Function):
     """Generate several octree from a Radiance folder.
-    
+
     Use this function to create octrees for multi-phase simulations.
     """
 
@@ -96,3 +96,26 @@ class CreateOctrees(Function):
         optional=True
     )
 
+
+@dataclass
+class CreateOctreeAbstractedGroups(Function):
+    """Generate a set of octrees from a folder containing abstracted aperture groups."""
+
+    # inputs
+    model = Inputs.folder(description='Path to Radiance model folder.', path='model')
+
+    sunpath = Inputs.file(
+        description='Path to sunpath file.', path='sunpath.mtx', optional=True
+    )
+
+    @command
+    def create_octree(self):
+        return 'honeybee-radiance octree from-abstracted-groups model ' \
+            '--sun-path sunpath.mtx --output-folder octree'
+
+    # outputs
+    scene_folder = Outputs.folder(description='Output octrees folder.', path='octree')
+
+    scene_info = Outputs.list(
+        description='Output octree files list.', path='octree/group_info.json'
+    )
