@@ -78,6 +78,11 @@ class SplitGridFolder(Function):
         'grids.', path='output_folder/_info.json'
     )
 
+    sensor_grids_file = Outputs.file(
+        description='A JSON file with information about generated sensor grids.',
+        path='output_folder/_info.json'
+    )
+
     dist_info = Outputs.file(
         description='A JSON file with distribution information.',
         path='output_folder/_redist_info.json'
