@@ -45,15 +45,9 @@ class MatrixMultiplicationThreePhase(Function):
         description='Path to daylight matrix.', path='day.dmx'
     )
 
-    options = Inputs.str(
-        description='Additional options for dctimestep', default='',
-        optional=True
-    )
-
-
     @command
     def matrix_multiply(self):
-        return 'honeybee-radiance multi-phase three-phase multiplication sky.smx ' \
-            'view.vmx t.xml day.dmx output.res --options "{{self.options}}"'
+        return 'honeybee-radiance multi-phase three-phase rmtxop view.vmx t.xml ' \
+            'day.dmx sky.smx output.res --illuminance --remove-header'
 
     output_matrix = Outputs.file(description='Three phase result.', path='output.res')
