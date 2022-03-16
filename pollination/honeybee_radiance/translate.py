@@ -140,7 +140,6 @@ class CreateRadianceFolderView(Function):
     )
 
 
-
 @dataclass
 class CreateRadiantEnclosureInfo(Function):
     """Create JSONs with radiant enclosure information from a HBJSON input file.
