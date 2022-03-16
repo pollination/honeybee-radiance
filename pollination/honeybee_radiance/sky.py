@@ -122,7 +122,8 @@ class SubtractSkyMatrix(Function):
     @command
     def create_matrix(self):
         return 'honeybee-radiance mtxop operate-two sky.ill sky_dir.ill ' \
-            '--operator "-" --{{self.header}}-header --conversion "{{self.conversion}}" ' \
+            '--operator "-" --{{self.header}}-header ' \
+            '--conversion "{{self.conversion}}" ' \
             '--output-mtx final.ill --output-format {{self.output_format}}'
 
     results_file = Outputs.file(description='Radiance matrix file.', path='final.ill')
