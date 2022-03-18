@@ -202,3 +202,85 @@ class DaylightMatrixGrouping(Function):
         description='Grouped apertures information file.',
         path='output/groups/_info.json'
     )
+
+
+@dataclass
+class CreateOctreesGrids(Function):
+    """Generate several octree from a Radiance folder as well as evenly distributed 
+    grids.
+
+    Use this function to create octrees and grids for multi-phase simulations.
+    """
+
+    # inputs
+    model = Inputs.folder(description='Path to Radiance model folder.', path='model')
+
+    phase = Inputs.int(
+        description='Select a multiphase study for which octrees will be created. '
+        '3-phase includes 2-phase, and 5-phase includes 3-phase and 2-phase. The valid '
+        'values are 2, 3 and 5',
+        default=5
+    )
+
+    sunpath = Inputs.file(
+        description='Path to sunpath file.', path='sun.path', optional=True
+    )
+
+    cpu_count = Inputs.int(
+        description='The number of processors to be used as a result of the '
+        'grid-splitting operation. This value is equivalent to the number of '
+        'sensor grids that will be generated when the cpus-per-grid is left as 1.',
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    cpus_per_grid = Inputs.int(
+        description='An integer to be divided by the cpu-count to yield a final number '
+        'of grids to generate. This is useful in workflows where there are multiple '
+        'processors acting on a single grid. To ignore this limitation, set the '
+        'value to 1.', spec={'type': 'integer', 'minimum': 1}, default=1
+    )
+
+    min_sensor_count = Inputs.int(
+        description='The minimum number of sensors in each output grid. Use this '
+        'number to ensure the number of sensors in output grids never gets very '
+        'small. This input will take precedence over the input cpu-count and '
+        'cpus-per-grid when specified. To ignore this limitation, set the value to 1. '
+        'Otherwise the number of grids will be adjusted based on minimum sensor '
+        'count if needed. Default: 2000.', default=2000,
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    @command
+    def create_octrees(self):
+        return 'honeybee-radiance multi-phase octrees-grids model ' \
+            '{{self.cpu_count}} --grid-divisor {{self.cpus_per_grid}} ' \
+            '--min-sensor-count {{self.min_sensor_count}} --sun-path sun.path ' \
+            '--phase {{self.phase}} --octree-folder octree --grid-folder grid'
+
+    # outputs
+    scene_folder = Outputs.folder(
+        description='Output octrees folder.', path='octree')
+
+    scene_info = Outputs.list(
+        description='Output octree files list.', path='multi_phase.json'
+    )
+
+    grid_folder = Outputs.folder(
+        description='Output grid folder.', path='grid')
+
+    two_phase_info = Outputs.list(
+        description='Output octree files list for the 2-Phase studies.',
+        path='two_phase.json',
+    )
+
+    three_phase_info = Outputs.list(
+        description='Output octree files list for the 3-Phase studies.',
+        path='three_phase.json',
+        optional=True
+    )
+
+    five_phase_info = Outputs.list(
+        description='Output octree files list for the 5-Phase studies.',
+        path='five_phase.json',
+        optional=True
+    )
