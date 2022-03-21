@@ -94,6 +94,65 @@ class SplitGridFolder(Function):
 
 
 @dataclass
+class SplitDataFolder(Function):
+    """Split an optional folder of data using the same logic as SplitGridFolder."""
+
+    input_folder = Inputs.folder(
+        description='Input folder containing CSV files coordinated with sensor grids.',
+        path='input_folder', optional=True
+    )
+
+    extension = Inputs.str(
+        description='File extension including the . before the extension '
+        '(e.g. .csv, .ill)', default='.pts'
+    )
+
+    cpu_count = Inputs.int(
+        description='The number of processors to be used as a result of the '
+        'grid-splitting operation. This value is equivalent to the number of '
+        'sensor grids that will be generated when the cpus-per-grid is left as 1.',
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    cpus_per_grid = Inputs.int(
+        description='An integer to be divided by the cpu-count to yield a final number '
+        'of grids to generate. This is useful in workflows where there are multiple '
+        'processors acting on a single grid. To ignore this limitation, set the '
+        'value to 1.', spec={'type': 'integer', 'minimum': 1}, default=1
+    )
+
+    min_sensor_count = Inputs.int(
+        description='The minimum number of sensors in each output grid. Use this '
+        'number to ensure the number of sensors in output grids never gets very '
+        'small. This input will take precedence over the input cpu-count and '
+        'cpus-per-grid when specified. To ignore this limitation, set the value to 1. '
+        'Otherwise the number of grids will be adjusted based on minimum sensor '
+        'count if needed. Default: 2000.', default=2000,
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    grid_info_file = Inputs.file(
+        description='Optional input JSON file containing information about '
+        'the sensor grids to be split. If unspecified, it will be assumed that this '
+        'JSON already exists in the input-folder with the name _info.json.',
+        path='grid_info.json', optional=True
+    )
+
+    @command
+    def split_grid_folder(self):
+        return 'honeybee-radiance grid split-folder ./input_folder ./output_folder ' \
+            '{{self.cpu_count}} {{self.extension}} ' \
+            '--grid-divisor {{self.cpus_per_grid}} ' \
+            '--min-sensor-count {{self.min_sensor_count}} ' \
+            '--grid-info-file grid_info.json'
+
+    output_folder = Outputs.folder(
+        description='Output folder with new sensor grids.',
+        path='output_folder', optional=True
+    )
+
+
+@dataclass
 class MergeFiles(Function):
     """Merge several files with similar starting name into one."""
 
