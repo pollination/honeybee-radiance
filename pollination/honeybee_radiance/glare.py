@@ -32,8 +32,8 @@ class DCGlareDGA(Function):
         description='Constant threshold factor in cd/m2.', default=2000
     )
 
-    occupancy_schedule = Inputs.file(
-        description='Path to occupancy schedule.', path='occupancy_schedule.csv',
+    schedule = Inputs.file(
+        description='Path to occupancy schedule.', path='schedule.txt',
         optional=True
     )
 
@@ -41,8 +41,8 @@ class DCGlareDGA(Function):
     def run_dcglare(self):
         return 'honeybee-radiance dcglare two-phase dc_direct.mtx dc_total.mtx ' \
             'sky.smx view_rays.ray --glare-limit {{self.glare_limit}} ' \
-            '--threshold-factor "{{self.threshold_factor}}" --occupancy-schedule ' \
-            '{{self.occupancy_schedule}} --output view_rays.ga'
+            '--threshold-factor {{self.threshold_factor}} --occupancy-schedule ' \
+            'schedule.txt --output view_rays.ga'
 
     view_rays_glare_autonomy = Outputs.file(
         description='Output dcglare glare autonomy file.', path='view_rays.ga'
@@ -76,16 +76,16 @@ class DCGlareDGP(Function):
         description='Constant threshold factor in cd/m2.', default=2000
     )
 
-    occupancy_schedule = Inputs.file(
-        description='Path to occupancy schedule.', path='occupancy_schedule.csv',
+    schedule = Inputs.file(
+        description='Path to occupancy schedule.', path='schedule.txt',
         optional=True
     )
 
     @command
     def run_dcglare(self):
         return 'honeybee-radiance dcglare two-phase dc_direct.mtx dc_total.mtx ' \
-            'sky.smx view_rays.ray --threshold-factor "{{self.threshold_factor}}" ' \
-            '--occupancy-schedule {{self.occupancy_schedule}} --output view_rays.dgp'
+            'sky.smx view_rays.ray --threshold-factor {{self.threshold_factor}} ' \
+            '--occupancy-schedule schedule.txt --output view_rays.dgp'
 
     view_rays_dgp = Outputs.file(
         description='Output dcglare dgp file.', path='view_rays.dgp'
