@@ -80,3 +80,64 @@ class DaylightCoefficient(Function):
             '--{{self.header}}-header'
 
     result_file = Outputs.file(description='Output result file.', path='results.ill')
+
+
+@dataclass
+class DaylightCoefficientNoSkyMatrix(Function):
+    """Calculate daylight coefficient for a grid of sensors."""
+
+    radiance_parameters = Inputs.str(
+        description='Radiance parameters. -I, -c 1 and -aa 0 are already included in '
+        'the command.', default=''
+    )
+
+    fixed_radiance_parameters = Inputs.str(
+        description='Radiance parameters. -I, -c 1 and -aa 0 are already included in '
+        'the command.', default='-aa 0'
+    )
+
+    sensor_count = Inputs.int(
+        description='Number of maximum sensors in each generated grid.',
+        spec={'type': 'integer', 'minimum': 1}
+    )
+
+    sky_dome = Inputs.file(
+        description='Path to a sky dome.', path='sky.dome'
+    )
+
+    sensor_grid = Inputs.file(
+        description='Path to sensor grid files.', path='grid.pts',
+        extensions=['pts']
+    )
+
+    scene_file = Inputs.file(
+        description='Path to an octree file to describe the scene.', path='scene.oct',
+        extensions=['oct']
+    )
+
+    header = Inputs.str(
+        default='keep',
+        description='An input to indicate if header should be kept or removed from the'
+        'output matrix.', spec={'type': 'string', 'enum': ['keep', 'remove']}
+    )
+
+    output_format = Inputs.str(
+        description='Output format for converted results. Valid inputs are a, f and '
+        'd for ASCII, float or double.', default='f',
+        spec={'type': 'string', 'enum': ['a', 'd', 'f']}
+    )
+
+    bsdf_folder = Inputs.folder(
+        description='Folder containing any BSDF files needed for ray tracing.',
+        path='model/bsdf', optional=True
+    )
+
+    @command
+    def run_daylight_coeff(self):
+        return 'honeybee-radiance dc coeff scene.oct grid.pts sky.dome ' \
+            '--sensor-count {{self.sensor_count}} --output results.mtx --rad-params ' \
+            '"{{self.radiance_parameters}}" --rad-params-locked ' \
+            '"{{self.fixed_radiance_parameters}}" --output-format ' \
+            '{{self.output_format}} --{{self.header}}-header'
+
+    result_file = Outputs.file(description='Output result file.', path='results.mtx')
