@@ -398,3 +398,20 @@ class SolarTrackingSynthesis(Function):
         description='Result folder containing synthesized .ill files that correspond '
         'to the tracking behavior.', path='final'
     )
+
+
+@dataclass
+class DaylightFactorConfig(Function):
+    """Create a config file for daylight factor results."""
+
+    folder = Inputs.str(
+        description='Name of the results folder.', path='daylight-factor'
+    )
+
+    @command
+    def solar_tracking_synthesis(self):
+        return 'honeybee-radiance post-process daylight-factor-config ' \
+            '-o config.json -f {{self.folder}}'
+
+    # outputs
+    cfg_file = Outputs.file(description='Output config file.', path='config.json')
