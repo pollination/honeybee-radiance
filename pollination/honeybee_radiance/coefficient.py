@@ -121,6 +121,12 @@ class DaylightCoefficientNoSkyMatrix(Function):
         'output matrix.', spec={'type': 'string', 'enum': ['keep', 'remove']}
     )
 
+    input_format = Inputs.str(
+        description='Format type for input. Valid inputs are a, f and d for '
+        'ASCII, float or double.', default='a',
+        spec={'type': 'string', 'enum': ['a', 'd', 'f']}
+    )
+
     output_format = Inputs.str(
         description='Output format for converted results. Valid inputs are a, f and '
         'd for ASCII, float or double.', default='f',
@@ -137,7 +143,8 @@ class DaylightCoefficientNoSkyMatrix(Function):
         return 'honeybee-radiance dc coeff scene.oct grid.pts sky.dome ' \
             '--sensor-count {{self.sensor_count}} --output results.mtx --rad-params ' \
             '"{{self.radiance_parameters}}" --rad-params-locked ' \
-            '"{{self.fixed_radiance_parameters}}" --output-format ' \
-            '{{self.output_format}} --{{self.header}}-header'
+            '"{{self.fixed_radiance_parameters}}" --input-format ' \
+            '{{self.input_format}} --output-format {{self.output_format}} ' \
+            '--{{self.header}}-header'
 
     result_file = Outputs.file(description='Output result file.', path='results.mtx')
