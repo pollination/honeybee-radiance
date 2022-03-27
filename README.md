@@ -17,7 +17,7 @@ You can see the list of available functions in honeybee-radiance plugin
 [here](https://app.pollination.cloud/plugins/ladybug-tools/honeybee-radiance)
 on Pollination.
 
-## Example
+## Examples
 
 For real-world examples see any of these Ladybug Tools recipes for Pollination:
 
