@@ -415,3 +415,52 @@ class DaylightFactorConfig(Function):
 
     # outputs
     cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class AnnualGlareAutonomy(Function):
+    """Calculate annual glare autonomy for imageless annual glare simulation."""
+
+    folder = Inputs.folder(
+        description='This folder is an output folder of imageless annual glare recipe. '
+        'Folder should include grids_info.json and sun-up-hours.txt. The command uses '
+        'the list in grids_info.json to find the result files for each sensor grid.',
+        path='raw_results'
+    )
+
+    schedule = Inputs.file(
+        description='Path to an annual schedule file. Values should be 0-1 separated '
+        'by new line. If not provided an 8-5 annual schedule will be created.',
+        path='schedule.txt', optional=True
+    )
+
+    glare_threshold = Inputs.float(
+        description='A fractional number for the threshold of DGP above which '
+        'conditions are considered to induce glare. This value is used when '
+        'calculating glare autonomy (the fraction of hours in which the view is free '
+        'of glare). Common values are 0.35 (Perceptible Glare), 0.4 (Disturbing '
+        'Glare), and 0.45 (Intolerable Glare).', default=0.4,
+        spec={'type': 'number', 'minimum': 0, 'maximum': 1}
+    )
+
+    @command
+    def calculate_annual_glare_autonomy(self):
+        return 'honeybee-radiance post-process annual-glare raw_results ' \
+            '--schedule schedule.txt --glare-threshold {{self.glare_threshold}} ' \
+            '--sub_folder ../metrics'
+
+    # outputs
+    annual_metrics = Outputs.folder(
+        description='Annual metrics folder. This folder includes all the other '
+        'subfolders which are also exposed as separate outputs.', path='metrics'
+    )
+
+    metrics_info = Outputs.file(
+        description='A config file with metrics subfolders information for '
+        'visualization. This config file is compatible with honeybee-vtk config.',
+        path='metrics/config.json'
+    )
+
+    glare_autonomy = Outputs.folder(
+        description='Glare autonomy results.', path='metrics/ga'
+    )
