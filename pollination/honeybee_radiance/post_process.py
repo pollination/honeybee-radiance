@@ -401,23 +401,6 @@ class SolarTrackingSynthesis(Function):
 
 
 @dataclass
-class DaylightFactorConfig(Function):
-    """Create a config file for daylight factor results."""
-
-    folder = Inputs.str(
-        description='Name of the results folder.', path='daylight-factor'
-    )
-
-    @command
-    def solar_tracking_synthesis(self):
-        return 'honeybee-radiance post-process daylight-factor-config ' \
-            '-o config.json -f {{self.folder}}'
-
-    # outputs
-    cfg_file = Outputs.file(description='Output config file.', path='config.json')
-
-
-@dataclass
 class AnnualGlareAutonomy(Function):
     """Calculate annual glare autonomy for imageless annual glare simulation."""
 
@@ -464,3 +447,84 @@ class AnnualGlareAutonomy(Function):
     glare_autonomy = Outputs.folder(
         description='Glare autonomy results.', path='metrics/ga'
     )
+
+
+@dataclass
+class DaylightFactorConfig(Function):
+    """Create a config file for daylight factor results."""
+
+    folder = Inputs.str(
+        description='Name of the results folder.', path='daylight-factor'
+    )
+
+    @command
+    def create_daylight_factor_config(self):
+        return 'honeybee-radiance post-process daylight-factor-config ' \
+            '-o config.json -f "{{self.folder}}"'
+
+    # outputs
+    cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class PointInTimeConfig(Function):
+    """Create a config file for point-in-time results."""
+
+    folder = Inputs.str(
+        description='Name of the results folder.', path='point-in-time'
+    )
+
+    @command
+    def create_point_in_time_config(self):
+        return 'honeybee-radiance post-process point-in-time-config ' \
+            '-o config.json -f "{{self.folder}}"'
+
+    # outputs
+    cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class CumulativeRadiationConfig(Function):
+    """Create a config file for cumulative-radiation results."""
+
+    @command
+    def create_point_in_time_config(self):
+        return 'honeybee-radiance post-process cumulative-radiation-config ' \
+            '-o config.json'
+
+    # outputs
+    cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class DirectSunHoursConfig(Function):
+    """Create a config file for direct-sun-hours results."""
+
+    folder = Inputs.str(
+        description='Name of the results folder.', path='direct-sun-hours'
+    )
+
+    @command
+    def create_point_in_time_config(self):
+        return 'honeybee-radiance post-process direct-sun-hours-config ' \
+            '-o config.json -f "{{self.folder}}"'
+
+    # outputs
+    cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class SkyViewConfig(Function):
+    """Create a config file for sky-view results."""
+
+    folder = Inputs.str(
+        description='Name of the results folder.', path='sky-view'
+    )
+
+    @command
+    def create_point_in_time_config(self):
+        return 'honeybee-radiance post-process sky-view-config ' \
+            '-o config.json -f "{{self.folder}}"'
+
+    # outputs
+    cfg_file = Outputs.file(description='Output config file.', path='config.json')
