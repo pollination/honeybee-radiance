@@ -474,10 +474,18 @@ class PointInTimeConfig(Function):
         description='Name of the results folder.', path='point-in-time'
     )
 
+    metric = Inputs.str(
+        description='Text for the type of metric to be output from the calculation. '
+        'Choose from: illuminance, irradiance, luminance, radiance.',
+        default='illuminance',
+        spec={'type': 'string',
+              'enum': ['illuminance', 'irradiance', 'luminance', 'radiance']}
+    )
+
     @command
     def create_point_in_time_config(self):
         return 'honeybee-radiance post-process point-in-time-config ' \
-            '-o config.json -f "{{self.folder}}"'
+            '-o config.json -f "{{self.folder}}" --metric {{self.metric}}'
 
     # outputs
     cfg_file = Outputs.file(description='Output config file.', path='config.json')
