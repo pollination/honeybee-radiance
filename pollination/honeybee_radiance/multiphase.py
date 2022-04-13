@@ -205,7 +205,7 @@ class DaylightMatrixGrouping(Function):
 
 
 @dataclass
-class CreateOctreesGrids(Function):
+class PrepareDynamic(Function):
     """Generate several octree from a Radiance folder as well as evenly distributed 
     grids.
 
@@ -250,23 +250,31 @@ class CreateOctreesGrids(Function):
         spec={'type': 'integer', 'minimum': 1}
     )
 
+    static = Inputs.str(
+        description='An input to indicate if static apertures should be excluded or '
+        'included. If excluded static apertures will not be treated as its own dynamic '
+        'state.', spec={'type': 'string', 'enum': ['exclude', 'include']},
+        default='exclude'
+    )
+
     @command
     def create_octrees(self):
-        return 'honeybee-radiance multi-phase octrees-grids model ' \
+        return 'honeybee-radiance multi-phase prepare-dynamic model ' \
             '{{self.cpu_count}} --grid-divisor {{self.cpus_per_grid}} ' \
             '--min-sensor-count {{self.min_sensor_count}} --sun-path sun.path ' \
-            '--phase {{self.phase}} --octree-folder octree --grid-folder grid'
+            '--phase {{self.phase}} --octree-folder octree --grid-folder grid ' \
+            '--{{self.static}}-static'
 
     # outputs
     scene_folder = Outputs.folder(
-        description='Output octrees folder.', path='octree')
+        description='Output octrees folder.', path='octree', optional=True)
 
     scene_info = Outputs.list(
         description='Output octree files list.', path='multi_phase.json'
     )
 
     grid_folder = Outputs.folder(
-        description='Output grid folder.', path='grid')
+        description='Output grid folder.', path='grid', optional=True)
 
     two_phase_info = Outputs.list(
         description='Output octree files list for the 2-Phase studies.',
