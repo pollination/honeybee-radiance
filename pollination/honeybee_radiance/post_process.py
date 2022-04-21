@@ -312,6 +312,49 @@ class AnnualDaylightMetrics(Function):
 
 
 @dataclass
+class AnnualDaylightEN17037Metrics(Function):
+    """Calculate annual daylight EN 173037 metrics for annual daylight simulation."""
+
+    folder = Inputs.folder(
+        description='This folder is an output folder of annual daylight recipe. Folder '
+        'should include grids_info.json and sun-up-hours.txt. The command uses the list '
+        'in grids_info.json to find the result files for each sensor grid.',
+        path='raw_results'
+    )
+
+    schedule = Inputs.file(
+        description='Path to an annual schedule file. Values should be 0-1 separated '
+        'by new line. This should be a daylight hours schedule according to EN 17037.',
+        path='schedule.txt'
+    )
+
+    @command
+    def calculate_annual_metrics_en17037(self):
+        return 'honeybee-radiance post-process annual-daylight-en17037 raw_results ' \
+            'schedule.txt --sub_folder ../metrics'
+
+    # outputs
+    annual_en17037_metrics = Outputs.folder(
+        description='Annual metrics folder. This folder includes all the other '
+        'subfolders which are also exposed as separate outputs.', path='metrics'
+    )
+
+    metrics_info = Outputs.file(
+        description='A config file with metrics subfolders information for '
+        'visualization. This config file is compatible with honeybee-vtk config.',
+        path='metrics/config.json'
+    )
+
+    target_illuminance = Outputs.folder(
+        description='Target illuminance results.', path='metrics/target_illuminance'
+    )
+
+    minimum_illuminance = Outputs.folder(
+        description='Minimum illuminance results.', path='metrics/minimum_illuminance'
+    )
+
+
+@dataclass
 class LeedIlluminanceCredits(Function):
     """Estimate LEED daylight credits from two point-in-time illuminance folders."""
 
