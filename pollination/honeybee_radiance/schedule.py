@@ -12,7 +12,7 @@ class EPWtoDaylightHours(Function):
     """
 
     epw = Inputs.file(
-        description='Path to epw file.', path='weather.epw'
+        description='Path to epw file.', path='weather.epw', extensions=['epw']
     )
 
     @command
