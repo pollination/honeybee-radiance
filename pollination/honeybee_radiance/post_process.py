@@ -335,7 +335,7 @@ class AnnualDaylightEN17037Metrics(Function):
 
     # outputs
     annual_en17037_metrics = Outputs.folder(
-        description='Annual metrics folder. This folder includes all the other '
+        description='Annual EN 17037 metrics folder. This folder includes all the other '
         'subfolders which are also exposed as separate outputs.', path='metrics'
     )
 
