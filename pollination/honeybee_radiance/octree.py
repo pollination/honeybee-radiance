@@ -141,5 +141,5 @@ class CreateOctreeShadeTransmittance(Function):
     scene_folder = Outputs.folder(description='Output octrees folder.', path='octree')
 
     scene_info = Outputs.list(
-        description='Output octree files list.', path='octree/group_info.json'
+        description='Output octree files list.', path='octree/trans_info.json'
     )
