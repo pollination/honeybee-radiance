@@ -26,3 +26,4 @@ For real-world examples see any of these Ladybug Tools recipes for Pollination:
 - [Point-in-Time Grid recipe](https://github.com/pollination/point-in-time-grid)
 - [Point-in-Time View recipe](https://github.com/pollination/point-in-time-view)
 - [Daylight Factor recipe](https://github.com/pollination/daylight-factor)
+- [Sky View recipe](https://github.com/pollination/sky-view)
