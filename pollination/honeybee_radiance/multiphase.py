@@ -205,7 +205,7 @@ class DaylightMatrixGrouping(Function):
 
 
 @dataclass
-class PrepareDynamic(Function):
+class PrepareMultiphase(Function):
     """Generate several octree from a Radiance folder as well as evenly distributed 
     grids.
 
@@ -258,8 +258,8 @@ class PrepareDynamic(Function):
     )
 
     @command
-    def create_octrees(self):
-        return 'honeybee-radiance multi-phase prepare-dynamic model ' \
+    def prepare_multiphase(self):
+        return 'honeybee-radiance multi-phase prepare-multiphase model ' \
             '{{self.cpu_count}} --grid-divisor {{self.cpus_per_grid}} ' \
             '--min-sensor-count {{self.min_sensor_count}} --sun-path sun.path ' \
             '--phase {{self.phase}} --octree-folder octree --grid-folder grid ' \
@@ -290,5 +290,11 @@ class PrepareDynamic(Function):
     five_phase_info = Outputs.list(
         description='Output octree files list for the 5-Phase studies.',
         path='five_phase.json',
+        optional=True
+    )
+
+    grid_states_file = Outputs.file(
+        description='Grid and states information for aperture groups.',
+        path='grid_states.json',
         optional=True
     )
