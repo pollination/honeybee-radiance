@@ -45,9 +45,28 @@ class MatrixMultiplicationThreePhase(Function):
         description='Path to daylight matrix.', path='day.dmx'
     )
 
+    output_format = Inputs.str(
+        description='Output format for output matrix. Valid inputs are a, f, d '
+        'and c for ASCII, float, double or RGBE colors.', default='a'
+    )
+
+    conversion = Inputs.str(
+        description='A flag to convert the result to illuminance. Default is '
+        'illuminance to convert from RGB to illuminance. Use raw to keep the '
+        'results in RGB triplets.',
+        default='illuminance'
+    )
+
+    header = Inputs.str(
+        default='remove',
+        description='An input to indicate if header should be kept or removed from the'
+        'output matrix.', spec={'type': 'string', 'enum': ['keep', 'remove']}
+    )
+
     @command
     def matrix_multiply(self):
         return 'honeybee-radiance multi-phase three-phase rmtxop view.vmx t.xml ' \
-            'day.dmx sky.smx output.res --illuminance --remove-header'
+            'day.dmx sky.smx output.res --output-format {{self.output_format}} ' \
+            '--{{self.conversion}} --{{self.header}}-header'
 
     output_matrix = Outputs.file(description='Three phase result.', path='output.res')
