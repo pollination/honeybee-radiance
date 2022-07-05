@@ -54,6 +54,7 @@ class MatrixMultiplicationThreePhase(Function):
         description='A flag to convert the result to illuminance. Default is '
         'illuminance to convert from RGB to illuminance. Use raw to keep the '
         'results in RGB triplets.',
+        spec={'type': 'string', 'enum': ['illuminance', 'raw']},
         default='illuminance'
     )
 
