@@ -278,19 +278,17 @@ class PrepareMultiphase(Function):
 
     two_phase_info = Outputs.list(
         description='Output octree files list for the 2-Phase studies.',
-        path='two_phase.json',
+        path='two_phase.json'
     )
 
     three_phase_info = Outputs.list(
         description='Output octree files list for the 3-Phase studies.',
-        path='three_phase.json',
-        optional=True
+        path='three_phase.json'
     )
 
     five_phase_info = Outputs.list(
         description='Output octree files list for the 5-Phase studies.',
-        path='five_phase.json',
-        optional=True
+        path='five_phase.json'
     )
 
     grid_states_file = Outputs.file(
