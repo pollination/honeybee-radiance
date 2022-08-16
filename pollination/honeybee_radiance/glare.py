@@ -4,8 +4,8 @@ from pollination_dsl.function import Function, command, Inputs, Outputs
 
 @dataclass
 class DCGlareDGA(Function):
-    """Calculates daylight glare autonomy. The daylight glare autonomy is the fraction 
-    of (occupied) hours without any detected glare. The detection of glare is controlled 
+    """Calculates daylight glare autonomy. The daylight glare autonomy is the fraction
+    of (occupied) hours without any detected glare. The detection of glare is controlled
     by glare_limit."""
 
     dc_direct = Inputs.file(
@@ -53,7 +53,7 @@ class DCGlareDGA(Function):
 class DCGlareDGP(Function):
     """Calculates DGP for all sky conditions in the sky matrix, but filtered by an
     occupancy schedule. This means that unoccupied hours will be zero DGP. If the
-    occupancy schedule is not given or does not exists the DGP will be calculated for all 
+    occupancy schedule is not given or does not exists the DGP will be calculated for all
     hours."""
 
     dc_direct = Inputs.file(
