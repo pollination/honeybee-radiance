@@ -206,7 +206,7 @@ class DaylightMatrixGrouping(Function):
 
 @dataclass
 class PrepareMultiphase(Function):
-    """Generate several octree from a Radiance folder as well as evenly distributed
+    """Generate several octrees from a Radiance folder as well as evenly distributed
     grids.
 
     Use this function to create octrees and grids for multi-phase simulations.
