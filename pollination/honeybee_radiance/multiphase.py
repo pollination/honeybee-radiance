@@ -269,7 +269,7 @@ class PrepareMultiphase(Function):
     scene_folder = Outputs.folder(
         description='Output octrees folder.', path='octree', optional=True)
 
-    scene_info = Outputs.list(
+    scene_info = Outputs.dict(
         description='Output octree files list.', path='multi_phase.json'
     )
 
@@ -277,8 +277,8 @@ class PrepareMultiphase(Function):
         description='Output grid folder.', path='grid', optional=True)
 
     two_phase_info = Outputs.list(
-        description='Output octree files list for the 2-Phase studies.',
-        path='two_phase.json'
+        description='Output octree files and grid information list for the 2-Phase '
+        'studies.', path='two_phase.json'
     )
 
     three_phase_info = Outputs.list(
