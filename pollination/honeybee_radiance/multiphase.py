@@ -257,13 +257,20 @@ class PrepareMultiphase(Function):
         default='exclude'
     )
 
+    default_states = Inputs.str(
+        description='An input to indicate if all aperture group states should be '
+        'simulated or if only the default states should be simulated.',
+        spec={'type': 'string', 'enum': ['default', 'all']},
+        default='all'
+    )
+
     @command
     def prepare_multiphase(self):
         return 'honeybee-radiance multi-phase prepare-multiphase model ' \
             '{{self.cpu_count}} --grid-divisor {{self.cpus_per_grid}} ' \
             '--min-sensor-count {{self.min_sensor_count}} --sun-path sun.path ' \
             '--phase {{self.phase}} --octree-folder octree --grid-folder grid ' \
-            '--{{self.static}}-static'
+            '--{{self.static}}-static --{{self.default_states}}-states'
 
     # outputs
     scene_folder = Outputs.folder(
