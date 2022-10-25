@@ -53,8 +53,8 @@ class DCGlareDGA(Function):
 class DCGlareDGP(Function):
     """Calculates DGP for all sky conditions in the sky matrix, but filtered by an
     occupancy schedule. This means that unoccupied hours will be zero DGP. If the
-    occupancy schedule is not given or does not exists the DGP will be calculated for all
-    hours."""
+    occupancy schedule is not given or does not exists the DGP will be calculated
+    for all hours."""
 
     dc_direct = Inputs.file(
         description='Path to dcdirect.', path='dc_direct.mtx',
