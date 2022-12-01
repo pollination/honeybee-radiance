@@ -493,6 +493,20 @@ class AnnualGlareAutonomy(Function):
 
 
 @dataclass
+class DaylightFactorVisMetadata(Function):
+    """Create a visualization metadata file for daylight factor."""
+
+    @command
+    def create_daylight_factor_vis_data(self):
+        return 'honeybee-radiance post-process daylight-factor-vis-metadata ' \
+            '--output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
+
+
+@dataclass
 class DaylightFactorConfig(Function):
     """Create a config file for daylight factor results."""
 
