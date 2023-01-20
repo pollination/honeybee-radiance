@@ -593,3 +593,17 @@ class SkyViewConfig(Function):
 
     # outputs
     cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class ImagelessAnnualGlareVisMetadata(Function):
+    """Create a visualization metadata file for imageless annual glare."""
+
+    @command
+    def create_imageless_annual_glare_vis_data(self):
+        return 'honeybee-radiance post-process imageless-annual-glare-vis-metadata ' \
+            '--output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
