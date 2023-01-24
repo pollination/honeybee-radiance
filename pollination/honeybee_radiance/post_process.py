@@ -562,6 +562,20 @@ class CumulativeRadiationConfig(Function):
 
 
 @dataclass
+class DirectSunHoursVisMetadata(Function):
+    """Create a visualization metadata file for direct sun hours."""
+
+    @command
+    def direct_sun_hours_vis_data(self):
+        return 'honeybee-radiance post-process direct-sun-hours-vis-metadata ' \
+            '--output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
+
+
+@dataclass
 class DirectSunHoursConfig(Function):
     """Create a config file for direct-sun-hours results."""
 
