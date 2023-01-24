@@ -59,6 +59,8 @@ def test_daylight_factor_vis_metadata():
 
     inputs = {} # inputs is empty for this function
     folder = './tests/assets/temp'
+    if not os.path.isdir(folder):
+        os.mkdir(folder)
     output_file = os.path.join(folder, 'vis_metadata.json')
     function._try(inputs, folder=folder)
     assert os.path.isfile(output_file)
@@ -74,6 +76,8 @@ def test_imageless_annual_glare_vis_metadata():
 
     inputs = {} # inputs is empty for this function
     folder = './tests/assets/temp'
+    if not os.path.isdir(folder):
+        os.mkdir(folder)
     output_file = os.path.join(folder, 'vis_metadata.json')
     function._try(inputs, folder=folder)
     assert os.path.isfile(output_file)
