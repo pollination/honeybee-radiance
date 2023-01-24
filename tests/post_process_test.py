@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 from ladybug.futil import nukedir
 from pollination.honeybee_radiance.post_process import ConvertToBinary, SumRow, \
@@ -58,12 +58,12 @@ def test_daylight_factor_vis_metadata():
     assert isinstance(qb_function, Function)
 
     inputs = {} # inputs is empty for this function
-    folder = './tests/assets/temp'
-    if not os.path.isdir(folder):
-        os.mkdir(folder)
-    output_file = os.path.join(folder, 'vis_metadata.json')
+    folder = Path('./tests/assets/temp')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    output_file = folder.joinpath('vis_metadata.json')
     function._try(inputs, folder=folder)
-    assert os.path.isfile(output_file)
+    assert output_file.is_file()
 
     nukedir(folder)
 
@@ -75,11 +75,11 @@ def test_imageless_annual_glare_vis_metadata():
     assert isinstance(qb_function, Function)
 
     inputs = {} # inputs is empty for this function
-    folder = './tests/assets/temp'
-    if not os.path.isdir(folder):
-        os.mkdir(folder)
-    output_file = os.path.join(folder, 'vis_metadata.json')
+    folder = Path('./tests/assets/temp')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    output_file = folder.joinpath('vis_metadata.json')
     function._try(inputs, folder=folder)
-    assert os.path.isfile(output_file)
+    assert output_file.is_file()
 
     nukedir(folder)
