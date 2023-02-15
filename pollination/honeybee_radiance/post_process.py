@@ -571,6 +571,34 @@ class PointInTimeConfig(Function):
 
 
 @dataclass
+class CumulativeRadiationVisMetadata(Function):
+    """Create a visualization metadata file for cumulative radiation."""
+
+    @command
+    def create_cumulative_radiation_vis_data(self):
+        return 'honeybee-radiance post-process cumulative-radiation-vis-metadata ' \
+            '--output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
+
+
+@dataclass
+class AverageIrradianceVisMetadata(Function):
+    """Create a visualization metadata file for average irradiance."""
+
+    @command
+    def create_average_irradiance_vis_data(self):
+        return 'honeybee-radiance post-process average-irradiance-vis-metadata ' \
+            '--output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
+
+
+@dataclass
 class CumulativeRadiationConfig(Function):
     """Create a config file for cumulative-radiation results."""
 
@@ -612,6 +640,20 @@ class DirectSunHoursConfig(Function):
 
     # outputs
     cfg_file = Outputs.file(description='Output config file.', path='config.json')
+
+
+@dataclass
+class SkyViewVisMetadata(Function):
+    """Create a visualization metadata file for sky view."""
+
+    @command
+    def create_sky_view_vis_data(self):
+        return 'honeybee-radiance post-process sky-view-vis-metadata ' \
+            '--output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
 
 
 @dataclass
