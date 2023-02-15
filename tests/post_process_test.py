@@ -4,7 +4,9 @@ from ladybug.futil import nukedir
 from pollination.honeybee_radiance.post_process import ConvertToBinary, SumRow, \
     AnnualIrradianceMetrics, AnnualDaylightMetrics, LeedIlluminanceCredits, \
     SolarTrackingSynthesis, DaylightFactorConfig, DaylightFactorVisMetadata, \
-    ImagelessAnnualGlareVisMetadata, PointInTimeVisMetadata
+    ImagelessAnnualGlareVisMetadata, PointInTimeVisMetadata, \
+    CumulativeRadiationVisMetadata, AverageIrradianceVisMetadata, \
+    SkyViewVisMetadata
 
 from queenbee.plugin.function import Function
 
@@ -91,6 +93,54 @@ def test_point_in_time_vis_metadata():
     assert isinstance(qb_function, Function)
 
     inputs = {'metric': 'illuminance'}
+    folder = Path('./tests/assets/temp')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    output_file = folder.joinpath('vis_metadata.json')
+    function._try(inputs, folder=folder)
+    assert output_file.is_file()
+
+    nukedir(folder)
+
+def test_cumulative_radiation_vis_metadata():
+    function = CumulativeRadiationVisMetadata()
+    qb_function = function.queenbee
+    assert qb_function.name == 'cumulative-radiation-vis-metadata'
+    assert isinstance(qb_function, Function)
+
+    inputs = {} # inputs is empty for this function
+    folder = Path('./tests/assets/temp')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    output_file = folder.joinpath('vis_metadata.json')
+    function._try(inputs, folder=folder)
+    assert output_file.is_file()
+
+    nukedir(folder)
+
+def test_average_irradiance_vis_metadata():
+    function = AverageIrradianceVisMetadata()
+    qb_function = function.queenbee
+    assert qb_function.name == 'average-irradiance-vis-metadata'
+    assert isinstance(qb_function, Function)
+
+    inputs = {} # inputs is empty for this function
+    folder = Path('./tests/assets/temp')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    output_file = folder.joinpath('vis_metadata.json')
+    function._try(inputs, folder=folder)
+    assert output_file.is_file()
+
+    nukedir(folder)
+
+def test_sky_view_vis_metadata():
+    function = SkyViewVisMetadata()
+    qb_function = function.queenbee
+    assert qb_function.name == 'sky-view-vis-metadata'
+    assert isinstance(qb_function, Function)
+
+    inputs = {} # inputs is empty for this function
     folder = Path('./tests/assets/temp')
     if not folder.exists():
         folder.mkdir(parents=True)
