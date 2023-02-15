@@ -524,6 +524,28 @@ class DaylightFactorConfig(Function):
 
 
 @dataclass
+class PointInTimeVisMetadata(Function):
+    """Create a visualization metadata file for point-in-time."""
+
+    metric = Inputs.str(
+        description='Text for the type of metric to be output from the calculation. '
+        'Choose from: illuminance, irradiance, luminance, radiance.',
+        default='illuminance',
+        spec={'type': 'string',
+              'enum': ['illuminance', 'irradiance', 'luminance', 'radiance']}
+    )
+
+    @command
+    def create_point_in_time_vis_data(self):
+        return 'honeybee-radiance post-process point-in-time-vis-metadata ' \
+            '--metric {{self.metric}} --output-file vis_metadata.json'
+
+    # outputs
+    cfg_file = Outputs.file(
+        description='Output visualization metadata file.', path='vis_metadata.json')
+
+
+@dataclass
 class PointInTimeConfig(Function):
     """Create a config file for point-in-time results."""
 
