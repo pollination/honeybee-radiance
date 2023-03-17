@@ -143,3 +143,29 @@ class CreateOctreeShadeTransmittance(Function):
     scene_info = Outputs.list(
         description='Output octree files list.', path='octree/trans_info.json'
     )
+
+
+@dataclass
+class CreateOctreeStatic(Function):
+    """Generate an octree from a Radiance folder."""
+
+    # inputs
+    model = Inputs.folder(description='Path to Radiance model folder.', path='model')
+
+    @command
+    def create_octree(self):
+        return 'honeybee-radiance octree from-folder-static model ' \
+            '--output scene.oct'
+
+
+@dataclass
+class CreateOctreeWithSkyStatic(CreateOctreeStatic):
+    """Generate an octree from a Radiance folder and a sky."""
+
+    # inputs
+    sky = Inputs.file(description='Path to sky file.', path='sky.sky')
+
+    @command
+    def create_octree(self):
+        return 'honeybee-radiance octree from-folder-static model ' \
+            '--output scene.oct --add-before sky.sky'
