@@ -157,6 +157,9 @@ class CreateOctreeStatic(Function):
         return 'honeybee-radiance octree from-folder-static model ' \
             '--output scene.oct'
 
+    # outputs
+    scene_file = Outputs.file(description='Output octree file.', path='scene.oct')
+
 
 @dataclass
 class CreateOctreeWithSkyStatic(CreateOctreeStatic):
@@ -169,3 +172,6 @@ class CreateOctreeWithSkyStatic(CreateOctreeStatic):
     def create_octree(self):
         return 'honeybee-radiance octree from-folder-static model ' \
             '--output scene.oct --add-before sky.sky'
+
+    # outputs
+    scene_file = Outputs.file(description='Output octree file.', path='scene.oct')
