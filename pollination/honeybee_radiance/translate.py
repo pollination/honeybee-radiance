@@ -33,7 +33,7 @@ class CreateRadianceFolder(Function):
     @command
     def hbjson_to_rad_folder(self):
         return 'honeybee-radiance translate model-to-rad-folder model.hbjson ' \
-            '--grid "{{self.grid_filter}}" --view "{{self.view_filter}}"'
+            '--grid " {{self.grid_filter}} " --view "{{self.view_filter}}"'
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
 
@@ -63,7 +63,7 @@ class CreateRadianceFolderGrid(Function):
     @command
     def hbjson_to_rad_folder(self):
         return 'honeybee-radiance translate model-to-rad-folder model.hbjson ' \
-            '--grid "{{self.grid_filter}}" --grid-check'
+            '--grid " {{self.grid_filter}} " --grid-check'
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
 
@@ -117,7 +117,7 @@ class CreateRadianceFolderView(Function):
     @command
     def hbjson_to_rad_folder(self):
         return 'honeybee-radiance translate model-to-rad-folder model.hbjson ' \
-            '--view "{{self.view_filter}}" --view-check'
+            '--view " {{self.view_filter}} " --view-check'
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
 
