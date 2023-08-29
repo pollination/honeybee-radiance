@@ -8,6 +8,19 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
     requirements = [req.replace('==', '>=') for req in requirements]
 
+
+def _clean_version():
+    """
+    This function was required because scm was generating developer versions on
+    GitHub Action.
+    """
+    def get_version(version):
+        return str(version.tag)
+    def empty(version):
+        return ''
+
+    return {'local_scheme': get_version, 'version_scheme': empty}
+
 # normal setuptool inputs
 setuptools.setup(
     name='pollination-honeybee-radiance',                                   # will be used for package name unless it is overwritten using __queenbee__ info.
@@ -17,7 +30,7 @@ setuptools.setup(
         include=['pollination.*'], exclude=['tests', '.github']
     ),
     install_requires=requirements,
-    use_scm_version=True,
+    use_scm_version=_clean_version,
     setup_requires=['setuptools_scm'],
     url='https://github.com/pollination/pollination-honeybee-radiance',     # will be translated to home
     project_urls={
