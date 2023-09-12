@@ -21,6 +21,7 @@ def _clean_version():
 
     return {'local_scheme': get_version, 'version_scheme': empty}
 
+
 # normal setuptool inputs
 setuptools.setup(
     name='pollination-honeybee-radiance',                                   # will be used for package name unless it is overwritten using __queenbee__ info.
