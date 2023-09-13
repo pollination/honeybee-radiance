@@ -2,14 +2,15 @@
 
 Pollination honeybee-radiance adds daylight simulation functions to Pollination.
 
-This plugin takes advantage of Ladybug Tools `honeybee-radiance` Python package CLI.
-For more information see: [PyPI](https://pypi.org/project/honeybee-radiance/) and
-[GitHub](https://github.com/ladybug-tools/honeybee-radiance).
+## Sources
 
-For running all the functionalities on your local machine you need to install
-[Radiance](https://www.radiance-online.org/)). You can download the latest official
-release of Radiance from
-[GitHub](https://github.com/LBNL-ETA/Radiance/releases/tag/012cb178).
+The following software components are included with this plugin:
+
+- Python 3.10
+- `honeybee-radiance` Python package. [PyPI](https://pypi.org/project/honeybee-radiance/), [source](https://github.com/ladybug-tools/honeybee-radiance)
+- `honeybee-radiance-command` Python package. [PyPI](https://pypi.org/project/honeybee-radiance-command/), [source](https://github.com/ladybug-tools/honeybee-radiance-command)
+- `honeybee-radiance-folder` Python package. [PyPI](https://pypi.org/project/honeybee-radiance-folder/), [source](https://github.com/ladybug-tools/honeybee-radiance-folder)
+- `Radiance` physics-based rendering engine. [docs](https://www.radiance-online.org), [source](https://github.com/LBNL-ETA/Radiance/releases/tag/012cb178)
 
 ## Functions
 
