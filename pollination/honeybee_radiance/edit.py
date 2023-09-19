@@ -10,7 +10,7 @@ class MirrorModelSensorGrids(Function):
     then adding a mirrored sensor grid with the same sensor positions that all
     point downward. In thermal mapping workflows, the upward-pointing grids are
     used to account for direct and diffuse shortwave irradiance while the
-    downard pointing grids account for ground-reflected shortwave irradiance.
+    downward pointing grids account for ground-reflected shortwave irradiance.
     """
 
     model = Inputs.file(
