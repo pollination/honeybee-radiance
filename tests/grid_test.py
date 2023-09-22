@@ -1,12 +1,35 @@
+from pathlib import Path
+from shutil import rmtree
+
 from pollination.honeybee_radiance.grid import SplitGrid, MergeFiles, \
     SplitGridFolder, MergeFolderData, MirrorGrid, RadiantEnclosureInfo
 from queenbee.plugin.function import Function
 
 
-def test_split_grid():
+def test_split_grid_function():
     function = SplitGrid().queenbee
     assert function.name == 'split-grid'
     assert isinstance(function, Function)
+
+
+def test_split_grid():
+    function = SplitGrid()
+    inputs = {
+        'input_grid': './tests/assets/grid/sensor_grid_split.pts',
+        'sensor_count': 5
+    }
+    folder = Path('./tests/assets/temp')
+    output_folder = folder.joinpath('output')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    function._try(inputs=inputs, folder=folder)
+    assert output_folder.is_dir()
+
+    for path in folder.glob('*'):
+        if path.is_file():
+            path.unlink()
+        elif path.is_dir():
+            rmtree(path)
 
 
 def test_merge_files():
