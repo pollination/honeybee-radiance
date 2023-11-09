@@ -32,10 +32,31 @@ def test_split_grid():
             rmtree(path)
 
 
-def test_merge_files():
+def test_merge_files_function():
     function = MergeFiles().queenbee
     assert function.name == 'merge-files'
     assert isinstance(function, Function)
+
+
+def test_merge_files():
+    function = MergeFiles()
+    input_folder = './tests/assets/grid'
+    inputs = {
+        'extension': '.ill',
+        'folder': input_folder
+    }
+    folder = Path('./tests/assets/temp')
+    output = folder.joinpath('grid.ill')
+    if not folder.exists():
+        folder.mkdir(parents=True)
+    function._try(inputs=inputs, folder=folder)
+    assert output.exists()
+
+    for path in folder.glob('*'):
+        if path.is_file():
+            path.unlink()
+        elif path.is_dir():
+            rmtree(path)
 
 
 def test_split_folder():
