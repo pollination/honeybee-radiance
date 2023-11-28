@@ -42,7 +42,7 @@ class CreateSunMtx(Function):
     )
 
     wea = Inputs.file(
-        description='Path to a wea file.', extensions=['wea'], path='sky.wea'
+        description='Path to a wea file.', extensions=['wea', 'epw'], path='sky.epw'
     )
 
     output_type = Inputs.str(
@@ -52,7 +52,7 @@ class CreateSunMtx(Function):
 
     @command
     def generate_sun_mtx(self):
-        return 'honeybee-radiance sunpath radiance sky.wea --name sunpath '\
+        return 'honeybee-radiance sunpath radiance sky.epw --name sunpath '\
             '--{{self.output_type}} --north {{self.north}}'
 
     sunpath = Outputs.file(description='Output sunpath matrix.', path='sunpath.mtx')
