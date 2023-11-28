@@ -249,12 +249,12 @@ class CreateSkyMatrix(Function):
     )
 
     wea = Inputs.file(
-        description='Path to a wea file.', extensions=['wea'], path='sky.wea'
+        description='Path to a wea file.', extensions=['wea', 'epw'], path='sky.epw'
     )
 
     @command
     def generate_sky_matrix(self):
-        return 'honeybee-radiance sky mtx sky.wea --name sky --north {{self.north}} ' \
+        return 'honeybee-radiance sky mtx sky.epw --name sky --north {{self.north}} ' \
             '--sky-type {{self.sky_type}} --{{self.cumulative}} ' \
             '--{{self.sun_up_hours}} --{{self.output_type}} ' \
             '--output-format {{self.output_format}} --sky-density {{self.sky_density}}'
