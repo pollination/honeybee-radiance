@@ -171,7 +171,8 @@ class CumulativeRadiation(Function):
 
     wea = Inputs.file(
         description='The .wea file that was used in the simulation. This will be '
-        'used to determine the duration of the analysis.', path='weather.wea'
+        'used to determine the duration of the analysis. This can also be an '
+        '.epw file.', path='weather.epw'
     )
 
     timestep = Inputs.int(
@@ -182,7 +183,7 @@ class CumulativeRadiation(Function):
     @command
     def average_mtx_row(self):
         return 'honeybee-radiance post-process cumulative-radiation avg_irr.mtx ' \
-            'weather.wea --timestep {{self.timestep}} --output radiation.mtx'
+            'weather.epw --timestep {{self.timestep}} --output radiation.mtx'
 
     # outputs
     radiation = Outputs.file(
@@ -203,7 +204,7 @@ class AnnualIrradianceMetrics(Function):
     wea = Inputs.file(
         description='The .wea file that was used in the annual irradiance simulation. '
         'This will be used to determine the duration of the analysis for computing '
-        'average irradiance.', path='weather.wea'
+        'average irradiance. This can also be an .epw file.', path='weather.epw'
     )
 
     timestep = Inputs.int(
@@ -215,7 +216,7 @@ class AnnualIrradianceMetrics(Function):
     @command
     def calculate_irradiance_metrics(self):
         return 'honeybee-radiance post-process annual-irradiance raw_results ' \
-            'weather.wea --timestep {{self.timestep}} --sub-folder ../metrics'
+            'weather.epw --timestep {{self.timestep}} --sub-folder ../metrics'
 
     # outputs
     metrics = Outputs.folder(
