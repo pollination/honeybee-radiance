@@ -299,8 +299,9 @@ class CreateLeedSkies(Function):
 
     wea = Inputs.file(
         description='Path to a Typical Meteorological Year (TMY) .wea file. The file '
-        'must be annual with a timestep of 1 for a non-leap year.',
-        extensions=['wea'], path='sky.wea'
+        'must be annual with a timestep of 1 for a non-leap year. This can also '
+        'be an .epw file.',
+        extensions=['wea', 'epw'], path='sky.epw'
     )
 
     north = Inputs.int(
@@ -310,7 +311,7 @@ class CreateLeedSkies(Function):
 
     @command
     def create_leed_skies(self):
-        return 'honeybee-radiance sky leed-illuminance sky.wea ' \
+        return 'honeybee-radiance sky leed-illuminance sky.epw ' \
             '--north {{self.north}} --folder output --log-file output/sky_info.json'
 
     sky_list = Outputs.list(
