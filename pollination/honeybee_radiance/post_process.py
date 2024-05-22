@@ -693,13 +693,14 @@ class LeedDaylightOptionTwoVisMetadata(Function):
     """Create five visualization metadata files for LEED Daylight Option Two."""
 
     output_folder = Inputs.str(
-        description='Name of the output folder.', path='visualization'
+        description='Name of the output folder.', default='visualization',
+        path='visualization'
     )
 
     @command
     def create_leed_daylight_option_two_vis_data(self):
         return 'honeybee-radiance post-process leed-daylight-option-two-vis-metadata ' \
-            '--output-folder visualization'
+            '--output-folder "{{self.output_folder}}"'
 
     # outputs
     vis_metadata_folder = Outputs.folder(
