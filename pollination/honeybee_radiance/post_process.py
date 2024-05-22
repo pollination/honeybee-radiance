@@ -686,3 +686,23 @@ class ImagelessAnnualGlareVisMetadata(Function):
     # outputs
     cfg_file = Outputs.file(
         description='Output visualization metadata file.', path='vis_metadata.json')
+
+
+@dataclass
+class LeedDaylightOptionTwoVisMetadata(Function):
+    """Create five visualization metadata files for LEED Daylight Option Two."""
+
+    output_folder = Inputs.str(
+        description='Name of the output folder.', path='visualization'
+    )
+
+    @command
+    def create_leed_daylight_option_two_vis_data(self):
+        return 'honeybee-radiance post-process leed-daylight-option-two-vis-metadata ' \
+            '--output-folder visualization'
+
+    # outputs
+    vis_metadata_folder = Outputs.folder(
+        description='Output folder with visualization metadata files.',
+        path='visualization'
+    )
