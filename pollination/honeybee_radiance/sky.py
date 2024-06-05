@@ -322,3 +322,34 @@ class CreateLeedSkies(Function):
     output_folder = Outputs.folder(
         description='Output folder with the generated sky files.', path='output'
     )
+
+
+@dataclass
+class AbntNbr15575Skies(Function):
+    """Generate four CIE skies for ABNT NBR 15575."""
+
+    wea = Inputs.file(
+        description='Path to a Typical Meteorological Year (TMY) .wea file. '
+        'This can also be an .epw file. The file is only used to extract the '
+        'location.',
+        extensions=['wea', 'epw'], path='sky.epw'
+    )
+
+    north = Inputs.int(
+        description='An angle for north direction. Default is 0.',
+        default=0, spec={'type': 'integer', 'maximum': 360, 'minimum': 0}
+    )
+
+    @command
+    def create_abnt_nbr_15575_skies(self):
+        return 'honeybee-radiance sky abnt-nbr-15575 sky.epw ' \
+            '--north {{self.north}} --folder output --log-file output/sky_info.json'
+
+    sky_list = Outputs.list(
+        description='A JSON array containing the information about the two '
+        'generated sky files.', path='output/sky_info.json'
+    )
+
+    output_folder = Outputs.folder(
+        description='Output folder with the generated sky files.', path='output'
+    )
