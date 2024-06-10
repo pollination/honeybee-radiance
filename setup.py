@@ -33,7 +33,7 @@ setuptools.setup(
     install_requires=requirements,
     use_scm_version=_clean_version,
     setup_requires=['setuptools_scm'],
-    url='https://github.com/pollination/pollination-honeybee-radiance',      # will be translated to home
+    url='https://github.com/pollination/pollination-honeybee-radiance',     # will be translated to home
     project_urls={
         'icon': 'https://raw.githubusercontent.com/ladybug-tools/artwork/master/icons_bugs/grasshopper_tabs/HB-Radiance.png',
         'docker': 'https://hub.docker.com/r/ladybugtools/honeybee-radiance'
