@@ -707,3 +707,24 @@ class LeedDaylightOptionTwoVisMetadata(Function):
         description='Output folder with visualization metadata files.',
         path='visualization'
     )
+
+
+@dataclass
+class AbntNbr15575DaylightVisMetadata(Function):
+    """Create four visualization metadata files for ABNT NBR 15575."""
+
+    output_folder = Inputs.str(
+        description='Name of the output folder.', default='visualization',
+        path='visualization'
+    )
+
+    @command
+    def create_abnt_nbr_15575_daylight_vis_data(self):
+        return 'honeybee-radiance post-process abnt-nbr-15575-daylight-vis-metadata ' \
+            '--output-folder "{{self.output_folder}}"'
+
+    # outputs
+    vis_metadata_folder = Outputs.folder(
+        description='Output folder with visualization metadata files.',
+        path='visualization'
+    )
