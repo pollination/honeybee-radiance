@@ -318,3 +318,43 @@ class PrepareMultiphase(Function):
         path='grid_states.json',
         optional=True
     )
+
+
+@dataclass
+class AddApertureGroupBlinds(Function):
+    """Add a state geometry to aperture groups.
+
+    This function adds state geometry to all aperture groups in the model. The
+    geometry is the same as the aperture geometry but the modifier is changed.
+    The geometry is translated by a distance which by default is 0.001 in model
+    units.
+    """
+
+    # inputs
+    model = Inputs.folder(
+        description='Path to Radiance model folder.',
+        path='model.hbjson'
+    )
+
+    distance = Inputs.float(
+        description='Distance from the aperture parent surface to the blind '
+        'surface.',
+        default=0.001
+    )
+
+    scale = Inputs.float(
+        description='Scaling value to scale blind geometry at the center point '
+        'of the aperture.',
+        default=1.001
+    )
+
+    @command
+    def add_aperture_group_blinds(self):
+        return 'honeybee-radiance multi-phase add-aperture-group-blinds ' \
+            'model.hbjson --distance {{self.distance}} --scale ' \
+            '{{self.scale}} --output-model model_blinds.hbjson'
+
+    # outputs
+    output_model = Outputs.file(
+        description='Model file with blind geometry.', path='model_blinds.hbjson'
+    )
