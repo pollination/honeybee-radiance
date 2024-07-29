@@ -324,16 +324,22 @@ class PrepareMultiphase(Function):
 class AddApertureGroupBlinds(Function):
     """Add a state geometry to aperture groups.
 
-    This function adds state geometry to all aperture groups in the model. The
+    This command adds state geometry to all aperture groups in the model. The
     geometry is the same as the aperture geometry but the modifier is changed.
-    The geometry is translated by a distance which by default is 0.001 in model
-    units.
+    The geometry is translated inward by a distance which by default is 0.001
+    in model units.
     """
 
     # inputs
     model = Inputs.folder(
         description='Path to Radiance model folder.',
         path='model.hbjson'
+    )
+
+    diffuse_transmission = Inputs.float(
+        description='Diffuse transmission of the aperture group blinds. Default '
+        'is 0.05 (5%).',
+        default=0.05
     )
 
     distance = Inputs.float(
@@ -351,8 +357,9 @@ class AddApertureGroupBlinds(Function):
     @command
     def add_aperture_group_blinds(self):
         return 'honeybee-radiance multi-phase add-aperture-group-blinds ' \
-            'model.hbjson --distance {{self.distance}} --scale ' \
-            '{{self.scale}} --output-model model_blinds.hbjson'
+            'model.hbjson --diffuse-transmission {{self.diffuse_transmission}} ' \
+            '--distance {{self.distance}} --scale {{self.scale}} ' \
+            '--output-model model_blinds.hbjson'
 
     # outputs
     output_model = Outputs.file(
