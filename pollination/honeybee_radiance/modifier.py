@@ -45,6 +45,16 @@ class SplitModifiers(Function):
             '--grid-file grid.pts --max-value {{self.max_value}} ' \
             '--sensor-multiplier {{self.sensor_multiplier}}'
 
+    modifiers = Outputs.list(
+        description='A JSON array that includes information about generated '
+        'modifiers.', path='output_folder/_info.json'
+    )
+
+    modifiers_file = Outputs.file(
+        description='A JSON file with information about generated modifiers.',
+        path='output_folder/_info.json'
+    )
+
     dist_info = Outputs.file(
         description='A JSON file with distribution information.',
         path='output_folder/_redist_info.json'
