@@ -342,6 +342,12 @@ class AddApertureGroupBlinds(Function):
         default=0.05
     )
 
+    specular_transmission = Inputs.float(
+        description='Specular transmission of the aperture group blinds. Default '
+        'is 0 (0%).',
+        default=0
+    )
+
     distance = Inputs.float(
         description='Distance from the aperture parent surface to the blind '
         'surface.',
@@ -358,6 +364,7 @@ class AddApertureGroupBlinds(Function):
     def add_aperture_group_blinds(self):
         return 'honeybee-radiance multi-phase add-aperture-group-blinds ' \
             'model.hbjson --diffuse-transmission {{self.diffuse_transmission}} ' \
+            '--specular-transmission {{self.specular_transmission}} ' \
             '--distance {{self.distance}} --scale {{self.scale}} ' \
             '--output-model model_blinds.hbjson'
 
