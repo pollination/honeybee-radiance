@@ -357,7 +357,7 @@ class AddApertureGroupBlinds(Function):
     scale = Inputs.float(
         description='Scaling value to scale blind geometry at the center point '
         'of the aperture.',
-        default=1.001
+        default=1.005
     )
 
     @command
