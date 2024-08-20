@@ -11,7 +11,7 @@ class StudyInfo(Function):
     """
 
     wea = Inputs.file(
-        description='Path to wea file.', path='wea.wea', extensions=['wea']
+        description='Path to a wea file.', extensions=['wea', 'epw'], path='sky.epw'
     )
 
     timestep = Inputs.int(
@@ -21,7 +21,7 @@ class StudyInfo(Function):
 
     @command
     def create_study_info(self):
-        return 'honeybee-radiance study study-info wea.wea {{self.timestep}} ' \
+        return 'honeybee-radiance study study-info sky.epw {{self.timestep}} ' \
             '--name study_info'
 
     study_info = Outputs.file(
