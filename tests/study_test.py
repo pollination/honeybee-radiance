@@ -12,7 +12,6 @@ def test_study_info_function():
     assert isinstance(function, Function)
 
 
-
 def test_study_info_wea():
     function = StudyInfo()
     inputs = {
