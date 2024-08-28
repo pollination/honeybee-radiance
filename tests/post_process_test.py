@@ -59,7 +59,7 @@ def test_daylight_factor_vis_metadata():
     assert qb_function.name == 'daylight-factor-vis-metadata'
     assert isinstance(qb_function, Function)
 
-    inputs = {} # inputs is empty for this function
+    inputs = {}  # inputs is empty for this function
     folder = Path('./tests/assets/temp')
     if not folder.exists():
         folder.mkdir(parents=True)
@@ -76,7 +76,7 @@ def test_imageless_annual_glare_vis_metadata():
     assert qb_function.name == 'imageless-annual-glare-vis-metadata'
     assert isinstance(qb_function, Function)
 
-    inputs = {} # inputs is empty for this function
+    inputs = {}  # inputs is empty for this function
     folder = Path('./tests/assets/temp')
     if not folder.exists():
         folder.mkdir(parents=True)
@@ -85,6 +85,7 @@ def test_imageless_annual_glare_vis_metadata():
     assert output_file.is_file()
 
     nukedir(folder)
+
 
 def test_point_in_time_vis_metadata():
     function = PointInTimeVisMetadata()
@@ -102,13 +103,14 @@ def test_point_in_time_vis_metadata():
 
     nukedir(folder)
 
+
 def test_cumulative_radiation_vis_metadata():
     function = CumulativeRadiationVisMetadata()
     qb_function = function.queenbee
     assert qb_function.name == 'cumulative-radiation-vis-metadata'
     assert isinstance(qb_function, Function)
 
-    inputs = {} # inputs is empty for this function
+    inputs = {}  # inputs is empty for this function
     folder = Path('./tests/assets/temp')
     if not folder.exists():
         folder.mkdir(parents=True)
@@ -117,6 +119,7 @@ def test_cumulative_radiation_vis_metadata():
     assert output_file.is_file()
 
     nukedir(folder)
+
 
 def test_average_irradiance_vis_metadata():
     function = AverageIrradianceVisMetadata()
@@ -124,7 +127,7 @@ def test_average_irradiance_vis_metadata():
     assert qb_function.name == 'average-irradiance-vis-metadata'
     assert isinstance(qb_function, Function)
 
-    inputs = {} # inputs is empty for this function
+    inputs = {}  # inputs is empty for this function
     folder = Path('./tests/assets/temp')
     if not folder.exists():
         folder.mkdir(parents=True)
@@ -134,13 +137,14 @@ def test_average_irradiance_vis_metadata():
 
     nukedir(folder)
 
+
 def test_sky_view_vis_metadata():
     function = SkyViewVisMetadata()
     qb_function = function.queenbee
     assert qb_function.name == 'sky-view-vis-metadata'
     assert isinstance(qb_function, Function)
 
-    inputs = {} # inputs is empty for this function
+    inputs = {}  # inputs is empty for this function
     folder = Path('./tests/assets/temp')
     if not folder.exists():
         folder.mkdir(parents=True)
