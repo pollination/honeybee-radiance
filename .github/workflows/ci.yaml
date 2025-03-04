@@ -58,7 +58,7 @@ jobs:
       - name: deploy to staging
         run: |
           queenbee
-          pollination dsl push pollination-honeybee-radiance --tag ${{needs.deploy.outputs.tag}} -e https://api.staging.pollination.cloud
+          pollination dsl push pollination-honeybee-radiance --tag ${{needs.deploy.outputs.tag}} -e https://api.staging.pollination.solutions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           QB_POLLINATION_TOKEN: ${{ secrets.POLLINATION_STAGING_LADYBUGBOT_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
       - name: deploy to production
         run: |
           queenbee
-          pollination dsl push pollination-honeybee-radiance -e https://api.pollination.cloud
+          pollination dsl push pollination-honeybee-radiance -e https://api.pollination.solutions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           QB_POLLINATION_TOKEN: ${{ secrets.POLLINATION_LADYBUGBOT_TOKEN }}
