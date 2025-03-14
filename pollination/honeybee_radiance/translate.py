@@ -63,9 +63,14 @@ class CreateRadianceFolderGrid(Function):
     @command
     def hbjson_to_rad_folder(self):
         return 'honeybee-radiance translate model-to-rad-folder model.hbjson ' \
-            '--grid " {{self.grid_filter}} " --grid-check'
+            '--grid " {{self.grid_filter}} " --grid-check --create-grids'
 
     model_folder = Outputs.folder(description='Radiance folder.', path='model')
+
+    output_model = Outputs.file(
+        description='Output HBJSON file.', path='output_model.hbjson',
+        optional=True
+    )
 
     bsdf_folder = Outputs.folder(
         description='Folder containing any BSDF files needed for the simulation.',
