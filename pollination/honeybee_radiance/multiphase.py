@@ -366,7 +366,7 @@ class AddApertureGroupBlinds(Function):
             'model.hbjson --diffuse-transmission {{self.diffuse_transmission}} ' \
             '--specular-transmission {{self.specular_transmission}} ' \
             '--distance {{self.distance}} --scale {{self.scale}} ' \
-            '--output-model model_blinds.hbjson'
+            '--create-groups --output-model model_blinds.hbjson'
 
     # outputs
     output_model = Outputs.file(
