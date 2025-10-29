@@ -31,7 +31,7 @@ setuptools.setup(
         include=['pollination.*'], exclude=['tests', '.github']
     ),
     install_requires=requirements,
-    use_scm_version=_clean_version,
+    use_scm_version=True,
     setup_requires=['setuptools_scm'],
     url='https://github.com/pollination/pollination-honeybee-radiance',     # will be translated to home
     project_urls={
