@@ -19,10 +19,15 @@ class StudyInfo(Function):
         spec={'type': 'integer', 'minimum': 1}
     )
 
+    study_type = Inputs.str(
+        description='Type of the study, e.g., annual-daylight or annual-irradiance.',
+        default='annual-daylight',
+    )
+
     @command
     def create_study_info(self):
         return 'honeybee-radiance study study-info sky.epw {{self.timestep}} ' \
-            '--name study_info'
+            '--study-type {{self.study_type}} --name study_info'
 
     study_info = Outputs.file(
         description='Path to study info file.', path='study_info.json'
