@@ -74,6 +74,12 @@ class SplitView(Function):
         path='model/bsdf', optional=True
     )
 
+
+    ies_folder = Inputs.folder(
+        description='Folder containing any IES files needed for ray tracing.',
+        path='model/ies', optional=True
+    )
+
     @command
     def split_view(self):
         return 'honeybee-radiance view split view.vf ' \

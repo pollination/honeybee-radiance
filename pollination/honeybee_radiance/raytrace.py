@@ -80,6 +80,11 @@ class RayTracingPointInTime(Function):
         path='model/bsdf', optional=True
     )
 
+    ies_folder = Inputs.folder(
+        description='Folder containing any IES files needed for ray tracing.',
+        path='model/ies', optional=True
+    )
+
     @command
     def ray_tracing(self):
         return 'honeybee-radiance raytrace point-in-time scene.oct grid.pts ' \

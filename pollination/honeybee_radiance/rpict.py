@@ -50,6 +50,11 @@ class RayTracingPicture(Function):
         path='model/bsdf', optional=True
     )
 
+    ies_folder = Inputs.folder(
+        description='Folder containing any IES files needed for ray tracing.',
+        path='model/ies', optional=True
+    )
+
     @command
     def ray_tracing(self):
         return 'honeybee-radiance rpict rpict scene.oct view.vf ' \
