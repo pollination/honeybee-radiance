@@ -168,10 +168,17 @@ class CreateOctreeWithSkyStatic(CreateOctreeStatic):
     # inputs
     sky = Inputs.file(description='Path to sky file.', path='sky.sky')
 
+    include_ies = Inputs.str(
+        default='exclude',
+        description='A value to indicate if the IES files should be included in '
+        'octree. Valid values are include and exclude. Default is exclude.',
+        spec={'type': 'string', 'enum': ['include', 'exclude']}
+    )
+
     @command
     def create_octree(self):
         return 'honeybee-radiance octree from-folder-static model ' \
-            '--output scene.oct --add-before sky.sky'
+            '--output scene.oct --{{self.include_ies}}-ies --add-before sky.sky'
 
     # outputs
     scene_file = Outputs.file(description='Output octree file.', path='scene.oct')
