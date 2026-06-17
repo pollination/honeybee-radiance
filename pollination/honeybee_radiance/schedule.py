@@ -20,6 +20,10 @@ class EPWtoDaylightHours(Function):
         return 'honeybee-radiance schedule epw-to-daylight-hours weather.epw ' \
             '--name daylight_hours'
 
-    daylight_hours = Outputs.file(
-        description='Path to daylight hours schedule.', path='daylight_hours.csv'
+    daylight_hours_csv = Outputs.file(
+        description='Path to daylight hours schedule as CSV.', path='daylight_hours.csv'
+    )
+
+    daylight_hours_json = Outputs.file(
+        description='Path to daylight hours schedule as DataCollection.', path='daylight_hours.json'
     )
