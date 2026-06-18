@@ -12,7 +12,7 @@ class EPWtoDaylightHours(Function):
     """
 
     epw = Inputs.file(
-        description='Path to epw file.', path='weather.epw', extensions=['epw']
+        description='Path to epw or wea file.', path='weather.epw', extensions=['epw', 'wea']
     )
 
     @command
@@ -26,4 +26,8 @@ class EPWtoDaylightHours(Function):
 
     daylight_hours_json = Outputs.file(
         description='Path to daylight hours schedule as DataCollection.', path='daylight_hours.json'
+    )
+
+    daylight_hours_wea = Outputs.file(
+        description='Path to converted Wea file.', path='daylight_hours.wea'
     )
